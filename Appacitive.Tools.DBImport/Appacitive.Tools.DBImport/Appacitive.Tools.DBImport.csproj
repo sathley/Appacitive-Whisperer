@@ -47,10 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Appacitive.cs" />
+    <Compile Include="Domain\AppacitiveInput.cs" />
     <Compile Include="Domain\CreateResult.cs" />
     <Compile Include="Domain\CannedList.cs" />
     <Compile Include="Domain\Database.cs" />
-    <Compile Include="Engine.cs" />
+    <Compile Include="Engine\EngineCore.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Property.cs" />
