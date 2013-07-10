@@ -48,8 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="MySqlGatherer.cs" />
+    <Compile Include="MySqlDriver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Appacitive.Tools.DBImport\Appacitive.Tools.DBImport.csproj">
+      <Project>{D62FD373-B926-47C5-BD47-364C598DE999}</Project>
+      <Name>Appacitive.Tools.DBImport</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

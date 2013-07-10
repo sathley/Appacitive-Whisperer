@@ -40,10 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="MySqlFixtures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Appacitive.Tools.DBImport.MySQL\Appacitive.Tools.DBImport.MySQL.csproj">
+      <Project>{A62A9F78-8311-4DA5-B7E4-97710F34984A}</Project>
+      <Name>Appacitive.Tools.DBImport.MySQL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Appacitive.Tools.DBImport\Appacitive.Tools.DBImport.csproj">
+      <Project>{D62FD373-B926-47C5-BD47-364C598DE999}</Project>
+      <Name>Appacitive.Tools.DBImport</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="json templates\config.json" />
   </ItemGroup>

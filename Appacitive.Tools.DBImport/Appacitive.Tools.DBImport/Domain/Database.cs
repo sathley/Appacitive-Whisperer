@@ -111,7 +111,21 @@ namespace Appacitive.Tools.DBImport
 
     public class UniqueIndex : Index
     {
+        public string IndexName { get; set; }
 
+        public long SequenceInIndex { get; set; }
+    }
+
+    public class PrimaryIndex : Index
+    {
+        public long SequenceInIndex { get; set; }
+    }
+
+    public class ForeignIndex : Index
+    {
+        public string ReferenceTableName { get; set; }
+
+        public string ReferenceColumnName { get; set; }
     }
 
     public class FullTextIndex : Index
@@ -165,23 +179,6 @@ namespace Appacitive.Tools.DBImport
     public class DefaultConstraint : Constraint
     {
         public object DefaultValue { get; set; }
-    }
-
-    public class UniqueConstraint : Constraint
-    {
-
-    }
-
-    public class PrimaryConstraint : Constraint
-    {
-
-    }
-
-    public class ForeignConstraint : Constraint
-    {
-        public string TableName { get; set; }
-
-        public string ColumnName { get; set; }
     }
 
     public class NotNullConstraint : Constraint

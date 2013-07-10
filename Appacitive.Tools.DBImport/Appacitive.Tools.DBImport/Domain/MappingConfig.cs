@@ -13,7 +13,7 @@ namespace Appacitive.Tools.DBImport
 
         public string ConnectionString { get; set; }
 
-        public string DBProvider { get; set; }  //sql, msql etc.
+        public string DBProvider { get; set; }  //sql, mysql etc.
 
         public List<TableMapping> TableMappings { get; set; } 
     }
