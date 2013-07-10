@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -9,25 +10,45 @@ namespace Appacitive.Tools.DBImport
         public static AppacitiveInput AppacitizeDatabase(this Database database, MappingConfig mappingConfig)
         {
             var result = new AppacitiveInput();
+            
             foreach (var table in database.Tables)
             {
                 var tableConfig =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(table.Name, StringComparison.InvariantCultureIgnoreCase));
                 if(tableConfig != null)
                 {
+                    //  Steps to take in absense of mapping config for this table
+
+                    //  Remove ignored columns
+                    table.Columns.RemoveAll(col => tableConfig.IgnoreColumns.Contains(col.Name));
+
+                    //  If table is to be converted to a cannedList
                     if(tableConfig.MakeCannedList)
                     {
-                        //table.Columns.RemoveAll(col => tableConfig.IgnoreColumns.Contains(col.Name));
-                        //if(table.Columns.Count !=2)
-                        //    throw new Exception("CannedList table can only have 2 columns. And one of them has to be primary key column.");
+                        //  Ensure table contains key and value columns
+                        if (table.Columns.Find(col => col.Name.Equals(tableConfig.CannedListKeyColumn)) == null || table.Columns.Find(col => col.Name.Equals(tableConfig.CannedListValueColumn)) == null)
+                        {
+                            throw new Exception("Table must contain both key and value columns.");
+                        }
 
-                        //result.CannedLists.Add(new CannedList()
-                        //                           {
-                        //                               Name = tableConfig.KeepNameAsIs?tableConfig.TableName:tableConfig.AppacitiveName,
-                        //                               Description = string.Format("Canned List for representing {0}", tableConfig.KeepNameAsIs ? tableConfig.TableName : tableConfig.AppacitiveName)
-                        //                           });
-
+                        //  Ensure cannedList key has unique or primary constraint
+                        var keyCol = table.Columns.Find(col => col.Name.Equals(tableConfig.CannedListKeyColumn));
+                        if (keyCol.Indexes.Exists(i => i.GetType() == typeof(UniqueIndex)) == false && keyCol.Indexes.Exists(i => i.GetType() == typeof(PrimaryIndex)) == false)
+                        {
+                            throw new Exception("CannedList key must have unique or primary key index/constraint");
+                        }
+                        
+                        result.CannedLists.Add(new CannedList()
+                                                   {
+                                                       Name = tableConfig.KeepNameAsIs?table.Name:tableConfig.AppacitiveSchemaName,
+                                                       Description = string.Format("CannedList for '{0}'", table.Name),
+                                                       Items = new List<ListItem>()
+                                                   });
                     }
+                }
+                else
+                {
+                    //  Steps to take in presence of mapping config for this table
                 }
             }
             return result;

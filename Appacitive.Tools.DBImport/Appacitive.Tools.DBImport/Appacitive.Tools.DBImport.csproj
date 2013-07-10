@@ -53,6 +53,7 @@
     <Compile Include="Domain\Database.cs" />
     <Compile Include="Domain\MappingConfig.cs" />
     <Compile Include="Engine\EngineCore.cs" />
+    <Compile Include="Input.cs" />
     <Compile Include="Interfaces\IDataGatherer.cs" />
     <Compile Include="Interfaces\IRelationalDatabase.cs" />
     <Compile Include="Program.cs" />

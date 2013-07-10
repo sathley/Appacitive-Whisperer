@@ -7,14 +7,6 @@ namespace Appacitive.Tools.DBImport
 {
     public class MappingConfig
     {
-        public string BlueprintId { get; set; }
-
-        public string APIKey { get; set; }
-
-        public string ConnectionString { get; set; }
-
-        public string DBProvider { get; set; }  //sql, mysql etc.
-
         public IEnumerable<TableMapping> TableMappings { get; set; } 
     }
 
@@ -33,6 +25,8 @@ namespace Appacitive.Tools.DBImport
         public string CannedListKeyColumn { get; set; }
 
         public string CannedListValueColumn { get; set; }   //  Other columns get ignored.
+
+        public string CannedListDescriptionColumn { get; set; }
 
         //  For many-to-many relationship
         public bool IsJunctionTable { get; set; }   // Is it a mapping table ?
