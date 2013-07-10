@@ -37,14 +37,18 @@ namespace Appacitive.Tools.DBImport
                         {
                             throw new Exception("CannedList key must have unique or primary key index/constraint");
                         }
-                        
+
+                        //  Add the cannedList to result
+                        //  Todo-Need to populate the cannedList too.
                         result.CannedLists.Add(new CannedList()
                                                    {
                                                        Name = tableConfig.KeepNameAsIs?table.Name:tableConfig.AppacitiveSchemaName,
                                                        Description = string.Format("CannedList for '{0}'", table.Name),
-                                                       Items = new List<ListItem>()
+                                                       Items = new List<ListItem>()//  Populate later
                                                    });
+                        continue;
                     }
+                    
                 }
                 else
                 {

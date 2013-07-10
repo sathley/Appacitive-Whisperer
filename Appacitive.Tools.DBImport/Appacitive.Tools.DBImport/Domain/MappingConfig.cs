@@ -7,6 +7,8 @@ namespace Appacitive.Tools.DBImport
 {
     public class MappingConfig
     {
+        public Input Input { get; set; }
+
         public IEnumerable<TableMapping> TableMappings { get; set; } 
     }
 
@@ -18,6 +20,8 @@ namespace Appacitive.Tools.DBImport
         public bool KeepNameAsIs { get; set; }
 
         public string AppacitiveSchemaName { get; set; }    //  Name of schema this table transforms into
+
+        public string Description { get; set; }
 
         //  Make CannedList details
         public bool MakeCannedList { get; set; }
@@ -73,6 +77,8 @@ namespace Appacitive.Tools.DBImport
         public bool KeepNameAsIs { get; set; }
 
         public string AppacitiveRelationName { get; set; }
+
+        public string Description { get; set; }
 
         public long RestrictManySideMultiplicityTo { get; set; }    //  -1 for *
 
