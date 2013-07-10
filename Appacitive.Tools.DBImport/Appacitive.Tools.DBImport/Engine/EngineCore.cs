@@ -17,15 +17,15 @@ namespace Appacitive.Tools.DBImport
                 {
                     if(tableConfig.MakeCannedList)
                     {
-                        table.Columns.RemoveAll(col => tableConfig.IgnoreColumns.Contains(col.Name));
-                        if(table.Columns.Count !=2)
-                            throw new Exception("CannedList table can only have 2 columns. And one of them has to be primary key column.");
+                        //table.Columns.RemoveAll(col => tableConfig.IgnoreColumns.Contains(col.Name));
+                        //if(table.Columns.Count !=2)
+                        //    throw new Exception("CannedList table can only have 2 columns. And one of them has to be primary key column.");
 
-                        result.CannedLists.Add(new CannedList()
-                                                   {
-                                                       Name = tableConfig.KeepNameAsIs?tableConfig.TableName:tableConfig.AppacitiveName,
-                                                       Description = string.Format("Canned List for representing {0}", tableConfig.KeepNameAsIs ? tableConfig.TableName : tableConfig.AppacitiveName)
-                                                   });
+                        //result.CannedLists.Add(new CannedList()
+                        //                           {
+                        //                               Name = tableConfig.KeepNameAsIs?tableConfig.TableName:tableConfig.AppacitiveName,
+                        //                               Description = string.Format("Canned List for representing {0}", tableConfig.KeepNameAsIs ? tableConfig.TableName : tableConfig.AppacitiveName)
+                        //                           });
 
                     }
                 }

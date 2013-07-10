@@ -11,10 +11,10 @@ namespace Appacitive.Tools.DBImport
             this.CannedLists = new List<CannedList>();
         }
 
-        public List<Schema> Schemata { get; set; }
+        public IEnumerable<Schema> Schemata { get; set; }
 
-        public List<Relation> Relations { get; set; }
+        public IEnumerable<Relation> Relations { get; set; }
 
-        public List<CannedList> CannedLists { get; set; } 
+        public IEnumerable<CannedList> CannedLists { get; set; } 
     }
 }
