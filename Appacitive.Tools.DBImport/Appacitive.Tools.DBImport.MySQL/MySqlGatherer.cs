@@ -10,7 +10,7 @@ namespace Appacitive.Tools.DBImport.MySQL
 {
     public class MySqlDataDefinitionGatherer : IDataDefinitionGatherer
     {
-        private IRelationalDatabase _driver = new MySqlDriver();
+        private readonly IRelationalDatabase _driver = new MySqlDriver();
 
         public Database GatherData(string connectionString, string database)
         {
@@ -69,7 +69,7 @@ namespace Appacitive.Tools.DBImport.MySQL
                     if (table.Rows[i]["Default"].Equals(DBNull.Value) == false)
                         column.Constraints.Add(new DefaultConstraint()
                                                    {
-                                                       DefaultValue = table.Rows[i]["Default"]
+                                                       DefaultValue = table.Rows[i]["Default"] as string
                                                    });
 
                     //  Foreign Key indexes
@@ -95,7 +95,8 @@ namespace Appacitive.Tools.DBImport.MySQL
                     for (int k = 0; k < table2.Rows.Count; k++)
                     {
                         //  Primary Key index
-                        if ((table2.Rows[k]["Key_name"] as string).Equals("PRIMARY"))
+                        var s = table2.Rows[k]["Key_name"] as string;
+                        if (s != null && s.Equals("PRIMARY"))
                             column.Indexes.Add(new PrimaryIndex()
                                                    {
                                                        SequenceInIndex = (long)table2.Rows[k]["Seq_in_index"]

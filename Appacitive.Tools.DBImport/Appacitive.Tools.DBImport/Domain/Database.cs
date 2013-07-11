@@ -96,21 +96,33 @@ namespace Appacitive.Tools.DBImport
 
     public abstract class Index
     {
-
+        public string Type { get; set; }
     }
 
     public class ClusteredIndex : Index
     {
-
+        public ClusteredIndex()
+        {
+            this.Type = "clustered";
+        }
     }
 
     public class NonClusteredIndex : Index
     {
+        public NonClusteredIndex()
+        {
+            this.Type = "nonclustered";
+        }
 
     }
 
     public class UniqueIndex : Index
     {
+        public UniqueIndex()
+        {
+            this.Type = "unique";
+        }
+
         public string IndexName { get; set; }
 
         public long SequenceInIndex { get; set; }
@@ -118,11 +130,19 @@ namespace Appacitive.Tools.DBImport
 
     public class PrimaryIndex : Index
     {
+        public PrimaryIndex()
+        {
+            this.Type = "primary";
+        }
         public long SequenceInIndex { get; set; }
     }
 
     public class ForeignIndex : Index
     {
+        public ForeignIndex()
+        {
+            this.Type = "foreign";
+        }
         public string ReferenceTableName { get; set; }
 
         public string ReferenceColumnName { get; set; }
@@ -130,22 +150,34 @@ namespace Appacitive.Tools.DBImport
 
     public class FullTextIndex : Index
     {
-
+        public FullTextIndex()
+        {
+            this.Type = "fulltext";
+        }
     }
 
     public class XMLIndex : Index
     {
-
+        public XMLIndex()
+        {
+            this.Type = "xml";
+        }
     }
 
     public class FilteredIndex : Index
     {
-
+        public FilteredIndex()
+        {
+            this.Type = "filtered";
+        }
     }
 
     public class SpatialIndex : Index
     {
-
+        public SpatialIndex()
+        {
+            this.Type = "spatial";
+        }
     }
 
     #endregion
@@ -164,26 +196,43 @@ namespace Appacitive.Tools.DBImport
 
     public abstract class Constraint
     {
-
+        public string Type { get; set; }
     }
 
     public class CheckConstraint : Constraint
     {
-        public object MinValue { get; set; }
+        public CheckConstraint()
+        {
+            this.Type = "check";
 
-        public object MaxValue { get; set; }
+        }
+        
+        public string MinValue { get; set; }
+
+        public string MaxValue { get; set; }
+
+        public long MinLength { get; set; }
+
+        public long MaxLength { get; set; }
 
         public string Regex { get; set; }
     }
 
     public class DefaultConstraint : Constraint
     {
-        public object DefaultValue { get; set; }
+        public DefaultConstraint()
+        {
+            this.Type = "default";
+        }
+        public string DefaultValue { get; set; }
     }
 
     public class NotNullConstraint : Constraint
     {
-
+        public NotNullConstraint()
+        {
+            this.Type = "notnull";
+        }
     }
 
     #endregion
