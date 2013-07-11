@@ -83,7 +83,8 @@ namespace Appacitive.Tools.DBImport.MySQL
                         column.Indexes.Add(new ForeignIndex()
                                                    {
                                                        ReferenceTableName = table1.Rows[j]["REFERENCED_TABLE_NAME"] as string,
-                                                       ReferenceColumnName = table1.Rows[j]["REFERENCED_COLUMN_NAME"] as string
+                                                       ReferenceColumnName = table1.Rows[j]["REFERENCED_COLUMN_NAME"] as string,
+                                                       Name = table1.Rows[j]["CONSTRAINT_NAME"] as string
                                                    });
                     }
 
@@ -105,7 +106,7 @@ namespace Appacitive.Tools.DBImport.MySQL
                             //  Unique key indexes
                             column.Indexes.Add(new UniqueIndex()
                                                    {
-                                                       IndexName = table2.Rows[k]["Key_name"] as string,
+                                                       Name = table2.Rows[k]["Key_name"] as string,
                                                        SequenceInIndex = (long)table2.Rows[k]["Seq_in_index"],
                                                    });
                     }

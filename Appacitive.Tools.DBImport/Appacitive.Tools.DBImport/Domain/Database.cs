@@ -97,6 +97,8 @@ namespace Appacitive.Tools.DBImport
     public abstract class Index
     {
         public string Type { get; set; }
+
+        public string Name { get; set; }
     }
 
     public class ClusteredIndex : Index
@@ -122,9 +124,7 @@ namespace Appacitive.Tools.DBImport
         {
             this.Type = "unique";
         }
-
-        public string IndexName { get; set; }
-
+        
         public long SequenceInIndex { get; set; }
     }
 
@@ -133,6 +133,7 @@ namespace Appacitive.Tools.DBImport
         public PrimaryIndex()
         {
             this.Type = "primary";
+            this.Name = "PRIMARY";
         }
         public long SequenceInIndex { get; set; }
     }
@@ -143,6 +144,7 @@ namespace Appacitive.Tools.DBImport
         {
             this.Type = "foreign";
         }
+
         public string ReferenceTableName { get; set; }
 
         public string ReferenceColumnName { get; set; }

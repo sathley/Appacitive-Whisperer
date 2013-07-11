@@ -10,8 +10,8 @@ namespace Appacitive.Tools.DBImport.Tests
     {
         public void TestMysqlGathere()
         {
-            var connString = "Server=sirius;Database=iidentity;Uid=root;Pwd=test123!@#;";
-            var db = "iidentity";
+            var connString = "Server=sirius;Database=igossamercore;Uid=root;Pwd=test123!@#;";
+            var db = "igossamercore";
             var gatherer = new MySqlDataDefinitionGatherer();
             var database =gatherer.GatherData(connString, db);
         }

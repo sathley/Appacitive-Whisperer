@@ -19,7 +19,7 @@ namespace Appacitive.Tools.DBImport
 
         public bool KeepNameAsIs { get; set; }
 
-        public string AppacitiveSchemaName { get; set; }    //  Name of schema this table transforms into
+        public string AppacitiveName { get; set; }    //  Name of schema this table transforms into
 
         public string Description { get; set; }
 
@@ -39,18 +39,24 @@ namespace Appacitive.Tools.DBImport
 
         public string JunctionsSideBColumn { get; set; }    //  other columns become relation properties
 
-        public string JunctionaSideAMultiplicity { get; set; }
+        public int JunctionaSideAMultiplicity { get; set; }
 
-        public string JunctionaSideBMultiplicity { get; set; }
+        public int JunctionaSideBMultiplicity { get; set; }
+
+        public string JunctionALabel { get; set; }
+
+        public string JunctionBLabel { get; set; }
 
         //  misc.
         public IEnumerable<string> IgnoreColumns { get; set; }  //  names of columns to be ignored alltogether
             
-        public IEnumerable<string> IgnoreForeignKeys { get; set; }      //  names of foreign keys to be ignored alltogether
+        public IEnumerable<string> IgnoreForeignKeyConstraints { get; set; }      //  names of foreign key constraints to be ignored alltogether
+
+        public IEnumerable<string> IgnoreUniqueKeyConstraints { get; set; }      //  names of unique key constraints to be ignored alltogether
 
         public IEnumerable<Property> AddPropertiesToSchema { get; set; }    //  add some extra properties to schema
 
-        public Dictionary<string, IEnumerable<Property>> AddPropertiesToForeignKeyRelations { get; set; }  //   these become relation properties
+        //public Dictionary<string, IEnumerable<Property>> AddPropertiesToForeignKeyRelations { get; set; }  //   these become relation properties
 
         public IEnumerable<PropertyMapping> PropertyMappings { get; set; }  //  if only basic editing is required
 
@@ -68,6 +74,8 @@ namespace Appacitive.Tools.DBImport
         public bool KeepNameAsIs { get; set; }
 
         public string AppacitivePropertyName { get; set; }
+
+        public string Description { get; set; }
     }
 
     public class ForeignKeyMapping
@@ -80,10 +88,12 @@ namespace Appacitive.Tools.DBImport
 
         public string Description { get; set; }
 
-        public long RestrictManySideMultiplicityTo { get; set; }    //  -1 for *
+        public int RestrictManySideMultiplicityTo { get; set; }    //  -1 for *
 
         public string OneSideLabel { get; set; }
 
         public string ManySideLabel { get; set; }
+
+        public IEnumerable<Property> AddPropertiesToForeignKeyRelations { get; set; }  //   these become relation properties
     }
 }

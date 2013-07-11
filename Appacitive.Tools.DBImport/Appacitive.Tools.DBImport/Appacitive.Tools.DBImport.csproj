@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Appacitive.cs" />
+    <Compile Include="Appacitive\AppacitiveWhisperer.cs" />
     <Compile Include="Domain\AppacitiveInput.cs" />
     <Compile Include="Domain\CreateResult.cs" />
     <Compile Include="Domain\CannedList.cs" />
