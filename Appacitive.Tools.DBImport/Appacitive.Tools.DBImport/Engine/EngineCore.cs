@@ -164,7 +164,7 @@ namespace Appacitive.Tools.DBImport
                                     relation.EndPointB.Label = foreignKeyMapping.OneSideLabel;
                                     relation.EndPointB.Multiplicity = foreignKeyMapping.RestrictManySideMultiplicityTo;
                                     relation.EndPointA.Multiplicity = 1;
-                                    relation.Properties.AddRange(foreignKeyMapping.AddPropertiesToForeignKeyRelations);
+                                    relation.Properties.AddRange(foreignKeyMapping.AddPropertiesToForeignKeyRelation);
 
                                 }
                                 else

@@ -56,14 +56,12 @@ namespace Appacitive.Tools.DBImport
 
         public IEnumerable<Property> AddPropertiesToSchema { get; set; }    //  add some extra properties to schema
 
-        //public Dictionary<string, IEnumerable<Property>> AddPropertiesToForeignKeyRelations { get; set; }  //   these become relation properties
-
         public IEnumerable<PropertyMapping> PropertyMappings { get; set; }  //  if only basic editing is required
 
         public IEnumerable<ForeignKeyMapping> ForeignKeyMappings { get; set; }  // describes how foreign keys map to relations
 
         //  Other notes -
-        //  Self referencing foriegn keys become self relations. Todo-Offer a way to alter its multiplicity and provide labels.
+        //  Self referencing foriegn keys become self relations.
         //  If table is made cannedlist, other tables which have foreign key to CannedListKeyColumn will get a property of datatype 'cannedlist'.
     }
 
@@ -94,6 +92,6 @@ namespace Appacitive.Tools.DBImport
 
         public string ManySideLabel { get; set; }
 
-        public IEnumerable<Property> AddPropertiesToForeignKeyRelations { get; set; }  //   these become relation properties
+        public IEnumerable<Property> AddPropertiesToForeignKeyRelation { get; set; }  //   these become relation properties
     }
 }
