@@ -51,11 +51,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\EngineCore.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="DBImport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rules\IRule.cs" />
+    <Compile Include="Rules\Rules.cs" />
+    <Compile Include="Rules\WithMappingConfig\CannedListRule.cs" />
+    <Compile Include="Rules\WithMappingConfig\IgnoreStuffRule.cs" />
+    <Compile Include="Rules\WithMappingConfig\JunctionTableRule.cs" />
+    <Compile Include="Rules\WithMappingConfig\RegularSchemaRule.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Rules\" />
+    <Folder Include="Rules\WithoutMappingConfig\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

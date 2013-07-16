@@ -10,7 +10,7 @@ namespace Appacitive.Tools.DBImport.Model
     {
         public Input Input { get; set; }
 
-        public IEnumerable<TableMapping> TableMappings { get; set; } 
+        public List<TableMapping> TableMappings { get; set; } 
     }
 
     [Serializable]
@@ -50,17 +50,17 @@ namespace Appacitive.Tools.DBImport.Model
         public string JunctionBLabel { get; set; }
 
         //  misc.
-        public IEnumerable<string> IgnoreColumns { get; set; }  //  names of columns to be ignored alltogether
-            
-        public IEnumerable<string> IgnoreForeignKeyConstraints { get; set; }      //  names of foreign key constraints to be ignored alltogether
+        public List<string> IgnoreColumns { get; set; }  //  names of columns to be ignored alltogether
 
-        public IEnumerable<string> IgnoreUniqueKeyConstraints { get; set; }      //  names of unique key constraints to be ignored alltogether
+        public List<string> IgnoreForeignKeyConstraints { get; set; }      //  names of foreign key constraints to be ignored alltogether
 
-        public IEnumerable<Property> AddPropertiesToSchema { get; set; }    //  add some extra properties to schema
+        public List<string> IgnoreUniqueKeyConstraints { get; set; }      //  names of unique key constraints to be ignored alltogether
 
-        public IEnumerable<PropertyMapping> PropertyMappings { get; set; }  //  if only basic editing is required
+        public List<Property> AddPropertiesToSchema { get; set; }    //  add some extra properties to schema
 
-        public IEnumerable<ForeignKeyMapping> ForeignKeyMappings { get; set; }  // describes how foreign keys map to relations
+        public List<PropertyMapping> PropertyMappings { get; set; }  //  if only basic editing is required
+
+        public List<ForeignKeyMapping> ForeignKeyMappings { get; set; }  // describes how foreign keys map to relations
 
         //  Other notes -
         //  Self referencing foriegn keys become self relations.
@@ -96,6 +96,6 @@ namespace Appacitive.Tools.DBImport.Model
 
         public string ManySideLabel { get; set; }
 
-        public IEnumerable<Property> AddPropertiesToRelation { get; set; }  //   these become relation properties
+        public List<Property> AddPropertiesToRelation { get; set; }  //   these become relation properties
     }
 }

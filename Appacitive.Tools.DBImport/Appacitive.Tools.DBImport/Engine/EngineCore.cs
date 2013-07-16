@@ -12,6 +12,8 @@ namespace Appacitive.Tools.DBImport
         {
             var result = new AppacitiveInput();
 
+            //  Whole method to be replaced with a simple rules processing engine
+
             foreach (var table in database.Tables)
             {
                 var tableConfig =
@@ -37,7 +39,7 @@ namespace Appacitive.Tools.DBImport
                         var colA = table.Columns.First(col => col.Name.Equals(tableConfig.JunctionsSideAColumn));
                         var colB = table.Columns.First(col => col.Name.Equals(tableConfig.JunctionsSideBColumn));
 
-                        //  Actually ask user to supply many-tomany relationships foreign keys
+                        //  Actually ask user to supply many-to many relationships foreign keys
                         var fKeyA = colA.Indexes.First(i => i.Type.Equals("foreign")) as ForeignIndex;
                         var fKeyB = colB.Indexes.First(i => i.Type.Equals("foreign")) as ForeignIndex;
 
