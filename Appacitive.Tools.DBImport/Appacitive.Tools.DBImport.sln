@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appacitive.Tools.DBImport.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appacitive.Tools.Whisperer", "Appacitive.Tools.Whisperer\Appacitive.Tools.Whisperer.csproj", "{7C342731-528B-43E1-B984-B2A14A364E2A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appacitive.Tools.DBImport.Logging", "Appacitive.Tools.DBImport.Logging\Appacitive.Tools.DBImport.Logging.csproj", "{1C281D0F-D513-40B7-8D1C-929C29C60D04}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +106,16 @@ Global
 		{7C342731-528B-43E1-B984-B2A14A364E2A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7C342731-528B-43E1-B984-B2A14A364E2A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7C342731-528B-43E1-B984-B2A14A364E2A}.Release|x86.ActiveCfg = Release|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1C281D0F-D513-40B7-8D1C-929C29C60D04}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

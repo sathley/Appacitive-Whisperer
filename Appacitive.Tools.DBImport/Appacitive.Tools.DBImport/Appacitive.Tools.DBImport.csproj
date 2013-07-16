@@ -61,6 +61,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Appacitive.Tools.DBImport.Interfaces\Appacitive.Tools.DBImport.Interfaces.csproj">
+      <Project>{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}</Project>
+      <Name>Appacitive.Tools.DBImport.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Appacitive.Tools.DBImport.Model\Appacitive.Tools.DBImport.Model.csproj">
       <Project>{D19D3DB3-B3A7-467A-8611-9858F40314EF}</Project>
       <Name>Appacitive.Tools.DBImport.Model</Name>

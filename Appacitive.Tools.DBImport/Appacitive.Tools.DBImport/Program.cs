@@ -12,13 +12,24 @@ namespace Appacitive.Tools.DBImport
         public void Import(MappingConfig mappingConfig)
         {
             var whisperer = new AppacitiveWhisperer(mappingConfig.Input.APIKey, mappingConfig.Input.BlueprintId);
-            //switch (mappingConfig.Input.DBProvider.ToLower())
-            //{
-            //    case "mysql":
-            //        //var gatherer = new MySqlDataDefinitionGatherer();
+            IDataDefinitionGatherer gatherer = null;
 
-            //}
+            switch (mappingConfig.Input.DBProvider.ToLower())
+            {
+                case "mysql":
+                    gatherer = new MySqlDataDefinitionGatherer();
+                    break;
+                case "sql":
+                    break;
+                default:
+                    break;
 
+            }
+
+            if (gatherer == null) return;
+            var data = gatherer.GatherData(mappingConfig.Input.DBConnectionString, mappingConfig.Input.DatabaseName);
+            var input = new EngineCore().AppacitizeDatabase(data, mappingConfig);
+            whisperer.Whisper(input);
         }
     }
 }

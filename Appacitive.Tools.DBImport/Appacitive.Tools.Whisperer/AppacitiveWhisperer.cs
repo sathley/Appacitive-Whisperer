@@ -17,6 +17,13 @@ namespace Appacitive.Tools.DBImport
 
         public string BlueprintId { get; set; }
 
+        public void Whisper(AppacitiveInput input)
+        {
+            input.CannedLists.ForEach(c=>CreateCannedList(c));
+            input.Schemata.ForEach(s=>CreateSchema(s));
+            input.Relations.ForEach(r=>CreateRelation(r));
+        }
+
         public CreateResult CreateSchema(Schema schema)
         {
             throw new NotImplementedException();
