@@ -2,21 +2,18 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D62FD373-B926-47C5-BD47-364C598DE999}</ProjectGuid>
+    <ProjectGuid>{7C342731-528B-43E1-B984-B2A14A364E2A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Appacitive.Tools.DBImport</RootNamespace>
-    <AssemblyName>Appacitive.Tools.DBImport</AssemblyName>
+    <RootNamespace>Appacitive.Tools.Whisperer</RootNamespace>
+    <AssemblyName>Appacitive.Tools.Whisperer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>
-    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,8 +22,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
-    <PlatformTarget>x86</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,13 +30,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\Library\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,28 +40,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\EngineCore.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="AppacitiveWhisperer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Rules\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Appacitive.Tools.DBImport.Model\Appacitive.Tools.DBImport.Model.csproj">
       <Project>{D19D3DB3-B3A7-467A-8611-9858F40314EF}</Project>
       <Name>Appacitive.Tools.DBImport.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Appacitive.Tools.DBImport.MySQL\Appacitive.Tools.DBImport.MySQL.csproj">
-      <Project>{A62A9F78-8311-4DA5-B7E4-97710F34984A}</Project>
-      <Name>Appacitive.Tools.DBImport.MySQL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Appacitive.Tools.Whisperer\Appacitive.Tools.Whisperer.csproj">
-      <Project>{7C342731-528B-43E1-B984-B2A14A364E2A}</Project>
-      <Name>Appacitive.Tools.Whisperer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

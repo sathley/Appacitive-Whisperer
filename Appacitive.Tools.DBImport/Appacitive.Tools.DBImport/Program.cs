@@ -11,7 +11,7 @@ namespace Appacitive.Tools.DBImport
     {
         public void Import(MappingConfig mappingConfig)
         {
-            AppacitiveWhisperer whisperer = new AppacitiveWhisperer(mappingConfig.Input.APIKey, mappingConfig.Input.BlueprintId);
+            var whisperer = new AppacitiveWhisperer(mappingConfig.Input.APIKey, mappingConfig.Input.BlueprintId);
             //switch (mappingConfig.Input.DBProvider.ToLower())
             //{
             //    case "mysql":
