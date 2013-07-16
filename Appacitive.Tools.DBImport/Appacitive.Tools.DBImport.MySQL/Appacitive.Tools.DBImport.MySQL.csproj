@@ -53,9 +53,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Appacitive.Tools.DBImport\Appacitive.Tools.DBImport.csproj">
-      <Project>{D62FD373-B926-47C5-BD47-364C598DE999}</Project>
-      <Name>Appacitive.Tools.DBImport</Name>
+    <ProjectReference Include="..\Appacitive.Tools.DBImport.Interfaces\Appacitive.Tools.DBImport.Interfaces.csproj">
+      <Project>{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}</Project>
+      <Name>Appacitive.Tools.DBImport.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Appacitive.Tools.DBImport.Model\Appacitive.Tools.DBImport.Model.csproj">
+      <Project>{D19D3DB3-B3A7-467A-8611-9858F40314EF}</Project>
+      <Name>Appacitive.Tools.DBImport.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

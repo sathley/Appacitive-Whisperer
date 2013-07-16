@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{AB91CC84-6566-45F4-BA54-5169F9880522}</ProjectGuid>
+    <ProjectGuid>{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Appacitive.Tools.DBImport.Tests</RootNamespace>
-    <AssemblyName>Appacitive.Tools.DBImport.Tests</AssemblyName>
+    <RootNamespace>Appacitive.Tools.DBImport.Interfaces</RootNamespace>
+    <AssemblyName>Appacitive.Tools.DBImport.Interfaces</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,29 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MySqlFixtures.cs" />
+    <Compile Include="IDataGatherer.cs" />
+    <Compile Include="IRelationalDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Appacitive.Tools.DBImport.Interfaces\Appacitive.Tools.DBImport.Interfaces.csproj">
-      <Project>{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}</Project>
-      <Name>Appacitive.Tools.DBImport.Interfaces</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Appacitive.Tools.DBImport.Model\Appacitive.Tools.DBImport.Model.csproj">
       <Project>{D19D3DB3-B3A7-467A-8611-9858F40314EF}</Project>
       <Name>Appacitive.Tools.DBImport.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Appacitive.Tools.DBImport.MySQL\Appacitive.Tools.DBImport.MySQL.csproj">
-      <Project>{A62A9F78-8311-4DA5-B7E4-97710F34984A}</Project>
-      <Name>Appacitive.Tools.DBImport.MySQL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Appacitive.Tools.DBImport\Appacitive.Tools.DBImport.csproj">
-      <Project>{D62FD373-B926-47C5-BD47-364C598DE999}</Project>
-      <Name>Appacitive.Tools.DBImport</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="json templates\config.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

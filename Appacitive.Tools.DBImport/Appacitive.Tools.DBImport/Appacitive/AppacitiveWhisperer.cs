@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using Appacitive.Tools.DBImport.Model;
 
 namespace Appacitive.Tools.DBImport
 {

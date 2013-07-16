@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appacitive.Tools.DBImport.Tests", "Appacitive.Tools.DBImport.Tests\Appacitive.Tools.DBImport.Tests.csproj", "{AB91CC84-6566-45F4-BA54-5169F9880522}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appacitive.Tools.DBImport.Interfaces", "Appacitive.Tools.DBImport.Interfaces\Appacitive.Tools.DBImport.Interfaces.csproj", "{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appacitive.Tools.DBImport.Model", "Appacitive.Tools.DBImport.Model\Appacitive.Tools.DBImport.Model.csproj", "{D19D3DB3-B3A7-467A-8611-9858F40314EF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +72,26 @@ Global
 		{AB91CC84-6566-45F4-BA54-5169F9880522}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{AB91CC84-6566-45F4-BA54-5169F9880522}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{AB91CC84-6566-45F4-BA54-5169F9880522}.Release|x86.ActiveCfg = Release|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}.Release|x86.ActiveCfg = Release|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D19D3DB3-B3A7-467A-8611-9858F40314EF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

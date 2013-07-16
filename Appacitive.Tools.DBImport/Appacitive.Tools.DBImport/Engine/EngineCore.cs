@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Appacitive.Tools.DBImport.Model;
 
 namespace Appacitive.Tools.DBImport
 {
@@ -164,7 +165,7 @@ namespace Appacitive.Tools.DBImport
                                     relation.EndPointB.Label = foreignKeyMapping.OneSideLabel;
                                     relation.EndPointB.Multiplicity = foreignKeyMapping.RestrictManySideMultiplicityTo;
                                     relation.EndPointA.Multiplicity = 1;
-                                    relation.Properties.AddRange(foreignKeyMapping.AddPropertiesToForeignKeyRelation);
+                                    relation.Properties.AddRange(foreignKeyMapping.AddPropertiesToRelation);
 
                                 }
                                 else
