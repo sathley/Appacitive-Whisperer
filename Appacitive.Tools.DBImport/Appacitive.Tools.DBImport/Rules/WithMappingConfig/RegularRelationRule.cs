@@ -39,6 +39,8 @@ namespace Appacitive.Tools.DBImport
                                                  ? manySideTableName
                                                  : manySideTableConfig.AppacitiveName;
                     }
+
+                    //  Should use sub-rules
                     if(fKeyMapping != null)
                     {
                         relation.Name = fKeyMapping.KeepNameAsIs

@@ -48,35 +48,7 @@ namespace Appacitive.Tools.DBImport
                 
                 foreach (var constraint in tableColumn.Constraints)
                 {
-                    switch (constraint.Type)
-                    {
-                        case "check":
-                            var checkConstraint = constraint as CheckConstraint;
-                            if (checkConstraint != null && checkConstraint.MinValue != null)
-                                property.Range.MinValue = checkConstraint.MinValue;
-                            if (checkConstraint != null && checkConstraint.MaxValue != null)
-                                property.Range.MaxValue = checkConstraint.MaxValue;
-                            if (checkConstraint != null)
-                            {
-                                property.MinLength = checkConstraint.MinLength;
-                                property.MaxLength = checkConstraint.MaxLength;
-                                if (string.IsNullOrEmpty(checkConstraint.Regex) == false)
-                                    property.RegexValidator = checkConstraint.Regex;
-                            }
-                            break;
-                        case "default":
-                            var defaultConstraint = constraint as DefaultConstraint;
-                            if (defaultConstraint != null && string.IsNullOrEmpty(defaultConstraint.DefaultValue) == false)
-                            {
-                                property.HasDefaultValue = true;
-                                property.DefaultValue = defaultConstraint.DefaultValue;
-                            }
-                            break;
-                        case "notnull":
-                            var notNullConstraint = constraint as NotNullConstraint;
-                            property.IsMandatory = true;
-                            break;
-                    }
+                    ConstraintsHelper.Process(constraint,ref property);
                 }
 
                 property.DataType = DataTypeHelper.FigureDataType(tableColumn);
