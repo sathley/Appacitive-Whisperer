@@ -21,8 +21,8 @@ namespace Appacitive.Tools.DBImport.Tests
                                                   DBConnectionString = connectionString,
                                                   DBProvider = "mysql",
                                                   DatabaseName = database,
-                                                  BlueprintId = "__EditableBlueprint_AppacitiveApplication",
-                                                  APIKey = "1",
+                                                  BlueprintId = "__EditableBlueprint_AppacitiveApplication2",
+                                                  APIKey = "2",
                                                   AppacitiveBaseURL = ConfigurationManager.AppSettings["appacitive-base-url"]
                                               },
                                               TableMappings = null

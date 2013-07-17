@@ -64,6 +64,7 @@
     <Compile Include="Rules\WithMappingConfig\RegularSchemaRule.cs" />
     <Compile Include="Rules\WithoutMappingConfig\RegularRelationRuleWithNoMapping.cs" />
     <Compile Include="Rules\WithoutMappingConfig\RegularSchemaRuleWithNoConfig.cs" />
+    <Compile Include="StringValidation.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

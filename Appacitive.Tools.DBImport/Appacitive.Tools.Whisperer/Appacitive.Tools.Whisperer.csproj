@@ -47,6 +47,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Appacitive.Tools.DBImport.Logging\Appacitive.Tools.DBImport.Logging.csproj">
+      <Project>{1C281D0F-D513-40B7-8D1C-929C29C60D04}</Project>
+      <Name>Appacitive.Tools.DBImport.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Appacitive.Tools.DBImport.Model\Appacitive.Tools.DBImport.Model.csproj">
       <Project>{D19D3DB3-B3A7-467A-8611-9858F40314EF}</Project>
       <Name>Appacitive.Tools.DBImport.Model</Name>

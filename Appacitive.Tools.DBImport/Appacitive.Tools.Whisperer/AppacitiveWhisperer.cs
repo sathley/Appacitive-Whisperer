@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using Appacitive.Tools.DBImport.Logging;
 using Appacitive.Tools.DBImport.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -54,10 +55,21 @@ namespace Appacitive.Tools.DBImport
             reader.Close();
             dataStream.Close();
             response.Close();
-            return new CreateResult()
+            var result =  new CreateResult()
                        {
                            Code = (string)jsonResponse["status"]["code"]
                        };
+            if(result.Code == "200")
+                Logger.Log(string.Format("Successfully created schema '{0}'",schema.Name));
+            else
+            {
+                Logger.Log(string.Format("Schema creation Failed for '{0}'",schema.Name));
+                Logger.Log("Request Data -");
+                Logger.Log(postData);
+                Logger.Log("Response Data -");
+                Logger.Log(responseFromServer);
+            }
+            return result;
         }
 
         public CreateResult CreateRelation(Relation relation)
@@ -83,10 +95,21 @@ namespace Appacitive.Tools.DBImport
             reader.Close();
             dataStream.Close();
             response.Close();
-            return new CreateResult()
+            var result = new CreateResult()
             {
                 Code = (string)jsonResponse["status"]["code"]
             };
+            if (result.Code == "200")
+                Logger.Log(string.Format("Successfully created relation '{0}'", relation.Name));
+            else
+            {
+                Logger.Log(string.Format("Relation creation Failed for '{0}'", relation.Name));
+                Logger.Log("Request Data -");
+                Logger.Log(postData);
+                Logger.Log("Response Data -");
+                Logger.Log(responseFromServer);
+            }
+            return result;
         }
 
         public CreateResult CreateCannedList(CannedList cannedList)
