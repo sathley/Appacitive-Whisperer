@@ -9,7 +9,11 @@ namespace Appacitive.Tools.DBImport
     {
         public static List<IRule> GetRulesForWithoutMappingConfig()
         {
-            return new List<IRule>();
+            return new List<IRule>()
+                       {
+                           new RegularSchemaRuleWithNoConfig(),
+                           new RegularRelationRuleWithNoMapping()
+                       };
         }
 
         public static List<IRule> GetRulesForWithMappingConfig()

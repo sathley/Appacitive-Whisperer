@@ -12,8 +12,6 @@ namespace Appacitive.Tools.DBImport
         {
             var result = new AppacitiveInput();
 
-            //  Whole method to be replaced with a simple rules processing engine
-
             for (int i = 0; i < database.Tables.Count; i++)
             {
                 var tableConfig =

@@ -62,10 +62,10 @@
     <Compile Include="Rules\WithMappingConfig\JunctionTableBasicRule.cs" />
     <Compile Include="Rules\WithMappingConfig\RegularRelationRule.cs" />
     <Compile Include="Rules\WithMappingConfig\RegularSchemaRule.cs" />
+    <Compile Include="Rules\WithoutMappingConfig\RegularRelationRuleWithNoMapping.cs" />
+    <Compile Include="Rules\WithoutMappingConfig\RegularSchemaRuleWithNoConfig.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Rules\WithoutMappingConfig\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
