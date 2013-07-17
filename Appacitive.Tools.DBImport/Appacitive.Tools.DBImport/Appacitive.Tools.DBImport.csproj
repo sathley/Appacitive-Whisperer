@@ -56,10 +56,10 @@
     <Compile Include="Rules\IRule.cs" />
     <Compile Include="Rules\RulesProvider.cs" />
     <Compile Include="Rules\WithMappingConfig\CannedListAssignmentRule.cs" />
-    <Compile Include="Rules\WithMappingConfig\CannedListRule.cs" />
+    <Compile Include="Rules\WithMappingConfig\CannedListBasicRule.cs" />
     <Compile Include="Rules\WithMappingConfig\IgnoreStuffRule.cs" />
     <Compile Include="Rules\WithMappingConfig\JunctionTableRelationsRule.cs" />
-    <Compile Include="Rules\WithMappingConfig\JunctionTableRule.cs" />
+    <Compile Include="Rules\WithMappingConfig\JunctionTableBasicRule.cs" />
     <Compile Include="Rules\WithMappingConfig\RegularSchemaRule.cs" />
   </ItemGroup>
   <ItemGroup>

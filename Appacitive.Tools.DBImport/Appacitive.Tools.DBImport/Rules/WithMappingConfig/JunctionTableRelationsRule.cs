@@ -50,12 +50,84 @@ namespace Appacitive.Tools.DBImport
                                                   ? -1
                                                   : tableConfig.JunctionaSideBMultiplicity;
 
-            //  Currently don't change junction table schemas names
-            //var tableA = 
 
+            var tableA = database.Tables.First(t => t.Name.Equals(juncColAfKeyIndex.ReferenceTableName));
+            var tableAConf = mappingConfig.TableMappings.Find(conf => conf.TableName.Equals(tableA.Name));
+            if (tableAConf == null)
+                relation.EndPointA.SchemaName = tableA.Name;
+            else
+            {
+                relation.EndPointA.SchemaName = tableAConf.KeepNameAsIs ? tableA.Name : tableAConf.AppacitiveName;
+            }
 
+            var tableB = database.Tables.First(t => t.Name.Equals(juncColBFKeyIndex.ReferenceTableName));
+            var tableBConf = mappingConfig.TableMappings.Find(conf => conf.TableName.Equals(tableB.Name));
+            if (tableBConf == null)
+                relation.EndPointB.SchemaName = tableB.Name;
+            else
+            {
+                relation.EndPointB.SchemaName = tableBConf.KeepNameAsIs ? tableB.Name : tableBConf.AppacitiveName;
+            }
 
+            //  Process remaining columns in junction table
 
+            //  TODO: Move property mapping logic to separate rule
+            foreach (var column in table.Columns)
+            {
+                if(column.Name.Equals(tableConfig.JunctionsSideAColumn) || column.Name.Equals(tableConfig.JunctionsSideBColumn))
+                    return;
+                var property = new Property();
+                var propertyConfig = tableConfig.PropertyMappings.First(pc => pc.ColumnName.Equals(column.Name));
+                if (propertyConfig == null)
+                {
+                    property.Name = column.Name;
+                    property.Description = string.Format("Property for {0}", property.Name);
+                }
+                else
+                {
+                    property.Name = propertyConfig.KeepNameAsIs
+                                        ? column.Name
+                                        : propertyConfig.AppacitivePropertyName;
+                    property.Description = string.IsNullOrEmpty(property.Description)
+                                               ? string.Format("Property for {0}", property.Name)
+                                               : propertyConfig.Description;
+                }
+
+                foreach (var constraint in column.Constraints)
+                {
+                    switch (constraint.Type)
+                    {
+                        case "check":
+                            var checkConstraint = constraint as CheckConstraint;
+                            if (checkConstraint != null && checkConstraint.MinValue != null)
+                                property.Range.MinValue = checkConstraint.MinValue;
+                            if (checkConstraint != null && checkConstraint.MaxValue != null)
+                                property.Range.MaxValue = checkConstraint.MaxValue;
+                            if (checkConstraint != null)
+                            {
+                                property.MinLength = checkConstraint.MinLength;
+                                property.MaxLength = checkConstraint.MaxLength;
+                                if (string.IsNullOrEmpty(checkConstraint.Regex) == false)
+                                    property.RegexValidator = checkConstraint.Regex;
+                            }
+                            break;
+                        case "default":
+                            var defaultConstraint = constraint as DefaultConstraint;
+                            if (defaultConstraint != null && string.IsNullOrEmpty(defaultConstraint.DefaultValue) == false)
+                            {
+                                property.HasDefaultValue = true;
+                                property.DefaultValue = defaultConstraint.DefaultValue;
+                            }
+                            break;
+                        case "notnull":
+                            var notNullConstraint = constraint as NotNullConstraint;
+                            property.IsMandatory = true;
+                            break;
+                    }
+                }
+                relation.Properties.Add(property);
+            }
+            input.Relations.Add(relation);
         }
     }
 }

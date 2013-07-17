@@ -18,7 +18,7 @@ namespace Appacitive.Tools.DBImport
                        {
                            new IgnoreStuffRule(),
                            new CannedListBasicRule(),
-                           new JunctionTableRule(),
+                           new JunctionTableBasicRule(),
                            new RegularSchemaRule(),
                            new JunctionTableRelationsRule(),
                            new CannedListAssignmentRule()
