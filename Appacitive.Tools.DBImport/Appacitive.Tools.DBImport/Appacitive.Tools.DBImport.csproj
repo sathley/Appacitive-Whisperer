@@ -60,6 +60,7 @@
     <Compile Include="Rules\WithMappingConfig\IgnoreStuffRule.cs" />
     <Compile Include="Rules\WithMappingConfig\JunctionTableRelationsRule.cs" />
     <Compile Include="Rules\WithMappingConfig\JunctionTableBasicRule.cs" />
+    <Compile Include="Rules\WithMappingConfig\RegularRelationRule.cs" />
     <Compile Include="Rules\WithMappingConfig\RegularSchemaRule.cs" />
   </ItemGroup>
   <ItemGroup>

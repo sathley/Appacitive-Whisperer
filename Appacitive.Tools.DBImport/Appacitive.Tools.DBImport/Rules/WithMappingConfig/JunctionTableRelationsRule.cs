@@ -68,9 +68,10 @@ namespace Appacitive.Tools.DBImport
             {
                 relation.EndPointB.SchemaName = tableBConf.KeepNameAsIs ? tableB.Name : tableBConf.AppacitiveName;
             }
+            relation.Properties=new List<Property>();
+            relation.Properties.AddRange(tableConfig.AddPropertiesToSchema);
 
             //  Process remaining columns in junction table
-
             //  TODO: Move property mapping logic to separate rule
             foreach (var column in table.Columns)
             {

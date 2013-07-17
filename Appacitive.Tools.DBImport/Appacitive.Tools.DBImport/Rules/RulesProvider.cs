@@ -21,7 +21,8 @@ namespace Appacitive.Tools.DBImport
                            new JunctionTableBasicRule(),
                            new RegularSchemaRule(),
                            new JunctionTableRelationsRule(),
-                           new CannedListAssignmentRule()
+                           new CannedListAssignmentRule(),
+                           new RegularRelationRule()
                        };
         }
     }
