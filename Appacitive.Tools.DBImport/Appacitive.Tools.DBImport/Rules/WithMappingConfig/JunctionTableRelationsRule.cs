@@ -93,7 +93,31 @@ namespace Appacitive.Tools.DBImport
                                                ? string.Format("Property for {0}", property.Name)
                                                : propertyConfig.Description;
                 }
+                //  Figure out data type
+                if (column.Type == DbDataType.NVarChar || column.Type == DbDataType.NChar
+                    || column.Type == DbDataType.VarChar || column.Type == DbDataType.Char)
+                    property.DataType = "string";
+                if (column.Type == DbDataType.Bit)
+                    property.DataType = "bool";
+                if (column.Type == DbDataType.SmallInt || column.Type == DbDataType.BigInt || column.Type == DbDataType.Int || column.Type == DbDataType.TinyInt)
+                    property.DataType = "integer";
+                if (column.Type == DbDataType.Timestamp || column.Type == DbDataType.SmallDateTime || column.Type == DbDataType.DateTime || column.Type == DbDataType.DateTime2)
+                    property.DataType = "datetime";
+                if (column.Type == DbDataType.Date)
+                    property.DataType = "date";
+                if (column.Type == DbDataType.Time)
+                    property.DataType = "time";
+                if (column.Type == DbDataType.Geography)
+                    property.DataType = "geography";
+                if (column.Type == DbDataType.Text || column.Type == DbDataType.NText)
+                    property.DataType = "text";
+                if (column.Type == DbDataType.Float || column.Type == DbDataType.Decimal)
+                    property.DataType = "decimal";
+                if (column.Type == DbDataType.VarBinary || column.Type == DbDataType.Binary || column.Type == DbDataType.Image)
+                    property.DataType = "blob";
 
+                if (string.IsNullOrEmpty(property.DataType))
+                    property.DataType = "string";
                 foreach (var constraint in column.Constraints)
                 {
                     switch (constraint.Type)

@@ -1,21 +1,27 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using Appacitive.Tools.DBImport.Model;
+using Newtonsoft.Json;
 
 namespace Appacitive.Tools.DBImport
 {
     public class AppacitiveWhisperer
     {
-        public AppacitiveWhisperer(string apiKey, string bId)
+        public AppacitiveWhisperer(string apiKey, string bId, string url)
         {
             this.ApiKey = apiKey;
             this.BlueprintId = bId;
+            this.BaseURL = url;
         }
 
         public string ApiKey { get; set; }
 
         public string BlueprintId { get; set; }
+
+        public string BaseURL { get; set; }
 
         public void Whisper(AppacitiveInput input)
         {
@@ -26,17 +32,87 @@ namespace Appacitive.Tools.DBImport
 
         public CreateResult CreateSchema(Schema schema)
         {
-            throw new NotImplementedException();
+            WebRequest request = WebRequest.Create(string.Format("{0}/schema/{1}",BaseURL,BlueprintId));
+            request.Method = "PUT";
+
+            string postData = JsonConvert.SerializeObject(schema);
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            request.ContentType = "application/json; charset=UTF-8";
+            request.ContentLength = byteArray.Length;
+            request.Headers.Add("Appacitive-Apikey", ApiKey);
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+            WebResponse response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            var jsonResponse = JsonConvert.DeserializeObject(responseFromServer);
+
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            return null;
         }
 
         public CreateResult CreateRelation(Relation relation)
         {
-            throw new NotImplementedException();
+            WebRequest request = WebRequest.Create(string.Format("{0}/relation/{1}", BaseURL, BlueprintId));
+            request.Method = "PUT";
+
+            string postData = JsonConvert.SerializeObject(relation);
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            request.ContentType = "application/json; charset=UTF-8";
+            request.ContentLength = byteArray.Length;
+            request.Headers.Add("Appacitive-Apikey", ApiKey);
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+            WebResponse response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            var jsonResponse = JsonConvert.DeserializeObject(responseFromServer);
+
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            return null;
         }
 
         public CreateResult CreateCannedList(CannedList cannedList)
         {
-            throw new NotImplementedException();
+            WebRequest request = WebRequest.Create(string.Format("{0}/list/{1}", BaseURL, BlueprintId));
+            request.Method = "PUT";
+
+            string postData = JsonConvert.SerializeObject(cannedList);
+            byte[] byteArray = Encoding.UTF8.GetBytes(postData);
+            request.ContentType = "application/json; charset=UTF-8";
+            request.ContentLength = byteArray.Length;
+            request.Headers.Add("Appacitive-Apikey", ApiKey);
+            Stream dataStream = request.GetRequestStream();
+            dataStream.Write(byteArray, 0, byteArray.Length);
+            dataStream.Close();
+            WebResponse response = request.GetResponse();
+            Console.WriteLine(((HttpWebResponse)response).StatusDescription);
+            dataStream = response.GetResponseStream();
+            StreamReader reader = new StreamReader(dataStream);
+            string responseFromServer = reader.ReadToEnd();
+            var jsonResponse = JsonConvert.DeserializeObject(responseFromServer);
+
+            reader.Close();
+            dataStream.Close();
+            response.Close();
+            return null;
+        }
+
+        public string AssembleSchema(Schema schema)
+        {
+            var json = JsonConvert.SerializeObject(schema);
+            return json;
+
         }
     }
 }

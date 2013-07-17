@@ -14,16 +14,20 @@ namespace Appacitive.Tools.DBImport
 
             for (int i = 0; i < database.Tables.Count; i++)
             {
-                var tableConfig =
-                    mappingConfig.TableMappings.FirstOrDefault(
-                        t => t.TableName.Equals(database.Tables[i].Name, StringComparison.InvariantCultureIgnoreCase));
-                
-                List<IRule> rules;
-                rules = tableConfig != null ? RulesProvider.GetRulesForWithMappingConfig() : RulesProvider.GetRulesForWithoutMappingConfig();
+                TableMapping tableConfig = null;
+                if (mappingConfig != null && mappingConfig.TableMappings != null)
+                {
+                    tableConfig =
+                        mappingConfig.TableMappings.FirstOrDefault(
+                            tm =>
+                            tm.TableName.Equals(database.Tables[i].Name, StringComparison.InvariantCultureIgnoreCase));
+                }
+                List<IRule> rules = tableConfig != null ? RulesProvider.GetRulesForWithMappingConfig() : RulesProvider.GetRulesForWithoutMappingConfig();
                 foreach (var rule in rules)
                 {
                     rule.Apply(database, null, i, ref result);
                 }
+
             }
             return result;
 

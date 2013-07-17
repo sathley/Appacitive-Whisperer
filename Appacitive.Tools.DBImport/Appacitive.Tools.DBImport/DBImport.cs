@@ -11,7 +11,7 @@ namespace Appacitive.Tools.DBImport
     {
         public void Import(MappingConfig mappingConfig)
         {
-            var whisperer = new AppacitiveWhisperer(mappingConfig.Input.APIKey, mappingConfig.Input.BlueprintId);
+            var whisperer = new AppacitiveWhisperer(mappingConfig.Input.APIKey, mappingConfig.Input.BlueprintId, mappingConfig.Input.AppacitiveBaseURL);
             IDataDefinitionGatherer gatherer = null;
 
             switch (mappingConfig.Input.DBProvider.ToLower())

@@ -44,7 +44,7 @@ namespace Appacitive.Tools.DBImport
                     schemaProperty.CannedListName = referenceTableConfig.KeepNameAsIs
                                                         ? referenceTable.Name
                                                         : referenceTableConfig.AppacitiveName;
-
+                    
                     //  Mark index as cannedList index
                     index.Type = "cannedlist-foreign";
 
