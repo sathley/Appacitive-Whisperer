@@ -31,7 +31,7 @@ namespace Appacitive.Tools.DBImport
                 if(tableColumn.Type == DbDataType.Bit)
                     property.DataType = "bool";
                 if (tableColumn.Type == DbDataType.SmallInt || tableColumn.Type == DbDataType.BigInt || tableColumn.Type == DbDataType.Int || tableColumn.Type == DbDataType.TinyInt)
-                    property.DataType = "integer";
+                    property.DataType = "long";
                 if (tableColumn.Type == DbDataType.Timestamp || tableColumn.Type == DbDataType.SmallDateTime || tableColumn.Type == DbDataType.DateTime || tableColumn.Type == DbDataType.DateTime2)
                     property.DataType = "datetime";
                 if (tableColumn.Type == DbDataType.Date)

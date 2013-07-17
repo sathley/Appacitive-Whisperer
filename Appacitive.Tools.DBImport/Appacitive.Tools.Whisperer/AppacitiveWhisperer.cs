@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using Appacitive.Tools.DBImport.Model;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Appacitive.Tools.DBImport
 {
@@ -48,12 +49,15 @@ namespace Appacitive.Tools.DBImport
             dataStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(dataStream);
             string responseFromServer = reader.ReadToEnd();
-            var jsonResponse = JsonConvert.DeserializeObject(responseFromServer);
-
+            var jsonResponse = JObject.Parse(responseFromServer);
+            
             reader.Close();
             dataStream.Close();
             response.Close();
-            return null;
+            return new CreateResult()
+                       {
+                           Code = (string)jsonResponse["status"]["code"]
+                       };
         }
 
         public CreateResult CreateRelation(Relation relation)
@@ -74,12 +78,15 @@ namespace Appacitive.Tools.DBImport
             dataStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(dataStream);
             string responseFromServer = reader.ReadToEnd();
-            var jsonResponse = JsonConvert.DeserializeObject(responseFromServer);
+            var jsonResponse = JObject.Parse(responseFromServer);
 
             reader.Close();
             dataStream.Close();
             response.Close();
-            return null;
+            return new CreateResult()
+            {
+                Code = (string)jsonResponse["status"]["code"]
+            };
         }
 
         public CreateResult CreateCannedList(CannedList cannedList)
@@ -100,12 +107,15 @@ namespace Appacitive.Tools.DBImport
             dataStream = response.GetResponseStream();
             StreamReader reader = new StreamReader(dataStream);
             string responseFromServer = reader.ReadToEnd();
-            var jsonResponse = JsonConvert.DeserializeObject(responseFromServer);
+            var jsonResponse = JObject.Parse(responseFromServer);
 
             reader.Close();
             dataStream.Close();
             response.Close();
-            return null;
+            return new CreateResult()
+            {
+                Code = (string)jsonResponse["status"]["code"]
+            };
         }
 
         public string AssembleSchema(Schema schema)

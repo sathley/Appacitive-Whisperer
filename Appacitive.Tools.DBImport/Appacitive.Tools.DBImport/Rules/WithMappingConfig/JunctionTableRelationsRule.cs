@@ -100,7 +100,7 @@ namespace Appacitive.Tools.DBImport
                 if (column.Type == DbDataType.Bit)
                     property.DataType = "bool";
                 if (column.Type == DbDataType.SmallInt || column.Type == DbDataType.BigInt || column.Type == DbDataType.Int || column.Type == DbDataType.TinyInt)
-                    property.DataType = "integer";
+                    property.DataType = "long";
                 if (column.Type == DbDataType.Timestamp || column.Type == DbDataType.SmallDateTime || column.Type == DbDataType.DateTime || column.Type == DbDataType.DateTime2)
                     property.DataType = "datetime";
                 if (column.Type == DbDataType.Date)
