@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="MySqlFixtures.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WithoutConfigTestFixtures.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Appacitive.Tools.DBImport.Interfaces\Appacitive.Tools.DBImport.Interfaces.csproj">
@@ -62,6 +63,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="json templates\config.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
