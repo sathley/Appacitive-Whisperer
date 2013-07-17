@@ -18,12 +18,12 @@ namespace Appacitive.Tools.DBImport
                     string.Format("Schema for {0}", table.Name),
                 Properties = new List<Property>()
             };
-            if(StringValidation.IsAlphanumeric(schema.Name) == false)
+            if(StringValidationHelper.IsAlphanumeric(schema.Name) == false)
                 throw new Exception(string.Format("Incorrect name for schema '{0}'. It should be alphanumeric starting with alphabet.",schema.Name));
             foreach (var tableColumn in table.Columns)
             {
                 var property = new Property {Name = tableColumn.Name};
-                if (StringValidation.IsAlphanumeric(property.Name) == false)
+                if (StringValidationHelper.IsAlphanumeric(property.Name) == false)
                     throw new Exception(string.Format("Incorrect name for property '{0}'. It should be alphanumeric starting with alphabet.", property.Name));
                 property.Description = string.Format("Property for {0}", property.Name);
 

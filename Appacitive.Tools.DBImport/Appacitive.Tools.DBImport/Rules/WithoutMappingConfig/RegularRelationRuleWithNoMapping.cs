@@ -25,7 +25,7 @@ namespace Appacitive.Tools.DBImport
                     var manySideSchemaName = manySideTable.Name;
 
                     relation.Name = fKeyIndex.Name;
-                    if (StringValidation.IsAlphanumeric(relation.Name) == false)
+                    if (StringValidationHelper.IsAlphanumeric(relation.Name) == false)
                         throw new Exception(string.Format("Incorrect name for relation '{0}'. It should be alphanumeric starting with alphabet.", relation.Name));
                     relation.Description = string.Format("Relation for '{0}'", fKeyIndex.Name);
                     relation.EndPointA = new EndPoint

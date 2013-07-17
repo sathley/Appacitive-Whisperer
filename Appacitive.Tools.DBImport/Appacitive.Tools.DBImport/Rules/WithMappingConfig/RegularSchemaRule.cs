@@ -23,7 +23,7 @@ namespace Appacitive.Tools.DBImport
                                      tableConfig.Description ?? string.Format("Schema for {0}", table.Name),
                                  Properties = new List<Property>()
                              };
-            if (StringValidation.IsAlphanumeric(schema.Name) == false)
+            if (StringValidationHelper.IsAlphanumeric(schema.Name) == false)
                 throw new Exception(string.Format("Incorrect name for schema '{0}'. It should be alphanumeric starting with alphabet.", schema.Name));
             schema.Properties.AddRange(tableConfig.AddPropertiesToSchema);
             //  Process columns

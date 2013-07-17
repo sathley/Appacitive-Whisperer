@@ -27,7 +27,7 @@ namespace Appacitive.Tools.DBImport
                                 ? string.Format("{0}_{1}", juncColAfKeyIndex.ReferenceTableName,
                                                 juncColBFKeyIndex.ReferenceTableName)
                                 : tableConfig.JunctionTableRelationName;
-            if (StringValidation.IsAlphanumeric(relation.Name) == false)
+            if (StringValidationHelper.IsAlphanumeric(relation.Name) == false)
                 throw new Exception(string.Format("Incorrect name for relation '{0}'. It should be alphanumeric starting with alphabet.", relation.Name));
             relation.Description = string.IsNullOrEmpty(tableConfig.JunctionTableRelationDescription)
                                        ? string.Format("Many to many Relation for junction table '{0}'", table.Name)

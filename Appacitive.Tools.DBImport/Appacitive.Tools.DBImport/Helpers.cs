@@ -7,7 +7,7 @@ using Appacitive.Tools.DBImport.Model;
 
 namespace Appacitive.Tools.DBImport
 {
-    public static class StringValidation
+    public static class StringValidationHelper
     {
         private static readonly Regex AphanumericRegex = new Regex(@"^[a-z]+[a-z0-9]*([_]*[a-z0-9])*[a-z0-9]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 

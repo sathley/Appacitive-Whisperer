@@ -32,7 +32,7 @@ namespace Appacitive.Tools.DBImport
 
                 //  Add the cannedList to result
                 //  Todo-Need to populate the cannedList too.
-                if (StringValidation.IsAlphanumeric(tableConfig.KeepNameAsIs ? table.Name : tableConfig.AppacitiveName) == false)
+                if (StringValidationHelper.IsAlphanumeric(tableConfig.KeepNameAsIs ? table.Name : tableConfig.AppacitiveName) == false)
                     throw new Exception(string.Format("Incorrect name for cannedlist '{0}'. It should be alphanumeric starting with alphabet.", tableConfig.KeepNameAsIs ? table.Name : tableConfig.AppacitiveName));
                 input.CannedLists.Add(new CannedList()
                 {
