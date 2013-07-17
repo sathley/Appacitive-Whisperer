@@ -14,17 +14,25 @@ namespace Appacitive.Tools.DBImport
 
             //  Whole method to be replaced with a simple rules processing engine
 
-            foreach (var table in database.Tables)
+            for (int i = 0; i < database.Tables.Count; i++)
             {
                 var tableConfig =
-                    mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(table.Name, StringComparison.InvariantCultureIgnoreCase));
+                    mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[i].Name, StringComparison.InvariantCultureIgnoreCase));
                 if (tableConfig != null)
                 {
-                    ProcessTable(table, tableConfig, ref result);
+                    var rules = RulesProvider.GetRulesForWithMappingConfig();
+                    foreach (var rule in rules)
+                    {
+                        rule.Apply(database, mappingConfig, i, ref result);
+                    }
                 }
                 else
                 {
-                    ProcessTable(table, ref result);
+                    var rules = RulesProvider.GetRulesForWithoutMappingConfig();
+                    foreach (var rule in rules)
+                    {
+                        rule.Apply(database, null, i, ref result);
+                    }
                 }
             }
 

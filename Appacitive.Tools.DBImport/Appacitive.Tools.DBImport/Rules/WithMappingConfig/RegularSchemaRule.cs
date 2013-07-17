@@ -8,9 +8,13 @@ namespace Appacitive.Tools.DBImport
 {
     public class RegularSchemaRule : IRule
     {
-        public void Apply(ref Table table, TableMapping tableConfig, ref AppacitiveInput input)
+        public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
-            if (tableConfig.IsJunctionTable || tableConfig.MakeCannedList) 
+            var table = database.Tables[tableIndex];
+            var tableConfig =
+                    mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+
+            if (tableConfig.IsJunctionTable || tableConfig.MakeCannedList)
                 return;
             var schema = new Schema
                              {
@@ -38,7 +42,9 @@ namespace Appacitive.Tools.DBImport
                     property.Description = string.IsNullOrEmpty(property.Description)
                                                ? string.Format("Property for {0}", property.Name)
                                                : propertyConfig.Description;
-                } foreach (var constraint in tableColumn.Constraints)
+                } 
+                
+                foreach (var constraint in tableColumn.Constraints)
                 {
                     switch (constraint.Type)
                     {

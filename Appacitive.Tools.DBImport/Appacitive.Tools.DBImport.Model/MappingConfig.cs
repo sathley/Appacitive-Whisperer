@@ -37,11 +37,15 @@ namespace Appacitive.Tools.DBImport.Model
         //  For many-to-many relationship
         public bool IsJunctionTable { get; set; }   // Is it a mapping table ?
 
+        public string JunctionTableRelationName { get; set; }
+
+        public string JunctionTableRelationDescription { get; set; }
+
         public string JunctionsSideAColumn { get; set; }
 
         public string JunctionsSideBColumn { get; set; }    //  other columns become relation properties
 
-        public int JunctionaSideAMultiplicity { get; set; }
+        public int JunctionaSideAMultiplicity { get; set; } //  -1 for *
 
         public int JunctionaSideBMultiplicity { get; set; }
 

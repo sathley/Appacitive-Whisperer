@@ -6,10 +6,14 @@ using Appacitive.Tools.DBImport.Model;
 
 namespace Appacitive.Tools.DBImport
 {
-    public class CannedListRule : IRule
+    public class CannedListBasicRule : IRule
     {
-        public void Apply(ref Table table, TableMapping tableConfig, ref AppacitiveInput input)
+        public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
+            var table = database.Tables[tableIndex];
+            var tableConfig =
+                    mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+
             //  If table is to be converted to a cannedList
             if (tableConfig.MakeCannedList)
             {

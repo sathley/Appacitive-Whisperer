@@ -8,6 +8,6 @@ namespace Appacitive.Tools.DBImport
 {
     public interface IRule
     {
-        void Apply(ref Table table, TableMapping tableConfig, ref AppacitiveInput input);
+        void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input);
     }
 }

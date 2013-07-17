@@ -8,8 +8,11 @@ namespace Appacitive.Tools.DBImport
 {
     public class IgnoreStuffRule : IRule
     {
-        public void Apply(ref Table table, TableMapping tableMapping, ref AppacitiveInput input)
+        public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
+            var table = database.Tables[tableIndex];
+            var tableMapping =
+                    mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
             //  Remove columns
             foreach (var ignoredColumn in tableMapping.IgnoreColumns)
