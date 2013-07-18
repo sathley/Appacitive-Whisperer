@@ -11,6 +11,8 @@ namespace Appacitive.Tools.DBImport.Logging
     {
         public static void Log(string message)
         {
+            //  Basic logger
+
             var loggingEnable = bool.Parse(ConfigurationManager.AppSettings["loggingenabled"]);
             if (loggingEnable)
             {

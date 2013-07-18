@@ -23,10 +23,10 @@ namespace Appacitive.Tools.DBImport
                            new IgnoreStuffRule(),
                            new CannedListBasicRule(),
                            new JunctionTableBasicRule(),
-                           new RegularSchemaRule(),
+                           new RegularSchemaRuleWithConfig(),
                            new JunctionTableRelationsRule(),
                            new CannedListAssignmentRule(),
-                           new RegularRelationRule()
+                           new RegularRelationRuleWithConfig()
                        };
         }
     }

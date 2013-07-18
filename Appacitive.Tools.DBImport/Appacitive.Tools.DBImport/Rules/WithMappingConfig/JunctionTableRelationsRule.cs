@@ -14,7 +14,7 @@ namespace Appacitive.Tools.DBImport
             var tableConfig =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
-            if (!tableConfig.IsJunctionTable)   return;
+            if (tableConfig != null && !tableConfig.IsJunctionTable) return;
 
             var juncColA = table.Columns.First(col => col.Name.Equals(tableConfig.JunctionsSideAColumn));
             var juncColB = table.Columns.First(col => col.Name.Equals(tableConfig.JunctionsSideBColumn));
@@ -23,25 +23,22 @@ namespace Appacitive.Tools.DBImport
             var juncColBFKeyIndex = juncColB.Indexes.First(i => i.Type.Equals("foriegn")) as ForeignIndex;
 
             var relation = new Relation();
-            relation.Name = string.IsNullOrEmpty(tableConfig.JunctionTableRelationName)
-                                ? string.Format("{0}_{1}", juncColAfKeyIndex.ReferenceTableName,
-                                                juncColBFKeyIndex.ReferenceTableName)
-                                : tableConfig.JunctionTableRelationName;
+
+            relation.Name = tableConfig.JunctionTableRelationName ??
+                            string.Format("{0}_{1}", juncColAfKeyIndex.ReferenceTableName,
+                                          juncColBFKeyIndex.ReferenceTableName);
+
+            //  Validate relation name.
             if (StringValidationHelper.IsAlphanumeric(relation.Name) == false)
                 throw new Exception(string.Format("Incorrect name for relation '{0}'. It should be alphanumeric starting with alphabet.", relation.Name));
-            relation.Description = string.IsNullOrEmpty(tableConfig.JunctionTableRelationDescription)
-                                       ? string.Format("Many to many Relation for junction table '{0}'", table.Name)
-                                       : tableConfig.JunctionTableRelationDescription;
 
-            relation.EndPointA=new EndPoint();
-            relation.EndPointB=new EndPoint();
-            relation.EndPointA.Label = string.IsNullOrEmpty(tableConfig.JunctionALabel)
-                                           ? juncColAfKeyIndex.ReferenceColumnName
-                                           : tableConfig.JunctionALabel;
+            relation.Description = tableConfig.JunctionTableRelationDescription ?? string.Format("Many-to-many Relation for junction table '{0}'", table.Name);
 
-            relation.EndPointB.Label = string.IsNullOrEmpty(tableConfig.JunctionBLabel)
-                                           ? juncColBFKeyIndex.ReferenceColumnName
-                                           : tableConfig.JunctionBLabel;
+            relation.EndPointA = new EndPoint();
+            relation.EndPointB = new EndPoint();
+            relation.EndPointA.Label = tableConfig.JunctionALabel ?? juncColAfKeyIndex.ReferenceColumnName;
+
+            relation.EndPointB.Label = tableConfig.JunctionBLabel ?? juncColBFKeyIndex.ReferenceColumnName;
 
             relation.EndPointA.Multiplicity = tableConfig.JunctionaSideAMultiplicity == 0
                                                   ? -1
@@ -53,30 +50,34 @@ namespace Appacitive.Tools.DBImport
 
 
             var tableA = database.Tables.First(t => t.Name.Equals(juncColAfKeyIndex.ReferenceTableName));
+            if(tableA==null)
+                throw new Exception(string.Format("No table found by name '{0}' for relation '{1}'.", juncColAfKeyIndex.ReferenceTableName,relation.Name));
             var tableAConf = mappingConfig.TableMappings.Find(conf => conf.TableName.Equals(tableA.Name));
+            
             if (tableAConf == null)
                 relation.EndPointA.SchemaName = tableA.Name;
             else
-            {
                 relation.EndPointA.SchemaName = tableAConf.KeepNameAsIs ? tableA.Name : tableAConf.AppacitiveName;
-            }
+
 
             var tableB = database.Tables.First(t => t.Name.Equals(juncColBFKeyIndex.ReferenceTableName));
+            if (tableB == null)
+                throw new Exception(string.Format("No table found by name '{0}' for relation '{1}'.", juncColAfKeyIndex.ReferenceTableName, relation.Name));
             var tableBConf = mappingConfig.TableMappings.Find(conf => conf.TableName.Equals(tableB.Name));
+            
             if (tableBConf == null)
                 relation.EndPointB.SchemaName = tableB.Name;
             else
-            {
                 relation.EndPointB.SchemaName = tableBConf.KeepNameAsIs ? tableB.Name : tableBConf.AppacitiveName;
-            }
-            relation.Properties=new List<Property>();
+            
+            relation.Properties = new List<Property>();
             relation.Properties.AddRange(tableConfig.AddPropertiesToSchema);
 
             //  Process remaining columns in junction table
             //  TODO: Move property mapping logic to separate rule
             foreach (var column in table.Columns)
             {
-                if(column.Name.Equals(tableConfig.JunctionsSideAColumn) || column.Name.Equals(tableConfig.JunctionsSideBColumn))
+                if (column.Name.Equals(tableConfig.JunctionsSideAColumn) || column.Name.Equals(tableConfig.JunctionsSideBColumn))
                     return;
                 var property = new Property();
                 var propertyConfig = tableConfig.PropertyMappings.First(pc => pc.ColumnName.Equals(column.Name));
@@ -94,14 +95,23 @@ namespace Appacitive.Tools.DBImport
                                                ? string.Format("Property for {0}", property.Name)
                                                : propertyConfig.Description;
                 }
+
+                //  Validate relation property name.
+                if (StringValidationHelper.IsAlphanumeric(property.Name) == false)
+                    throw new Exception(string.Format("Incorrect name for property '{0}' in relation '{1}'. It should be alphanumeric starting with alphabet.",property.Name, relation.Name));
+
+                //  Figure out Appacitive datatype
                 property.DataType = DataTypeHelper.FigureDataType(column);
-                
+
+                //  Add Appacitive business constraints
                 foreach (var constraint in column.Constraints)
                 {
                     ConstraintsHelper.Process(constraint, ref property);
                 }
+
                 relation.Properties.Add(property);
             }
+
             input.Relations.Add(relation);
         }
     }

@@ -18,8 +18,10 @@ namespace Appacitive.Tools.DBImport
             {
                 foreach (var index in column.Indexes)
                 {
-                    if (index.Type.Equals("foriegn") == false) return;
+                    if (index.Type.Equals("foreign") == false) return;
                     var fKeyIndex = index as ForeignIndex;
+                    
+                    //  Get table that became cannedList
                     var referenceTable = database.Tables.Find(t => t.Name.Equals(fKeyIndex.ReferenceTableName));
                     var referenceTableConfig =
                         mappingConfig.TableMappings.Find(conf => conf.TableName.Equals(referenceTable.Name));
@@ -29,6 +31,8 @@ namespace Appacitive.Tools.DBImport
                                          ? table.Name
                                          : tableConfig.AppacitiveName;
                     var schema = input.Schemata.Find(s => s.Name.Equals(schemaName));
+                    if (schema == null) return;
+                    
                     string schemaPropertyName = string.Empty;
                     var propertyConfig =tableConfig.PropertyMappings.Find(pm => pm.ColumnName.Equals(column.Name));
                     if (propertyConfig == null)
@@ -40,6 +44,8 @@ namespace Appacitive.Tools.DBImport
                                                  : propertyConfig.AppacitivePropertyName;
                     }
                     var schemaProperty = schema.Properties.Find(p => p.Name.Equals(schemaPropertyName));
+                    if(schemaProperty==null) return;
+
                     schemaProperty.AreValuesFromCannedList = true;
                     schemaProperty.CannedListName = referenceTableConfig.KeepNameAsIs
                                                         ? referenceTable.Name

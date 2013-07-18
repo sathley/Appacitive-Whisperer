@@ -14,13 +14,14 @@ namespace Appacitive.Tools.DBImport
             var tableMapping =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
-            //  Remove columns
+            //  Remove ignored columns
+            if (tableMapping == null) return;
             foreach (var ignoredColumn in tableMapping.IgnoreColumns)
             {
                 table.Columns.RemoveAll(col => col.Name.Equals(ignoredColumn, StringComparison.InvariantCultureIgnoreCase));
             }
 
-            //  Remove foreign key constraints
+            //  Remove ignored foreign key constraints
             foreach (var ignoredFKey in tableMapping.IgnoreForeignKeyConstraints)
             {
                 foreach (var column in table.Columns)
@@ -29,7 +30,7 @@ namespace Appacitive.Tools.DBImport
                 }
             }
 
-            //  Remove unique key constraints
+            //  Remove ignored unique key constraints
             foreach (var ignoredUKey in tableMapping.IgnoreUniqueKeyConstraints)
             {
                 foreach (var column in table.Columns)
