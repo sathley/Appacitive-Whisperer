@@ -65,7 +65,15 @@ namespace Appacitive.Tools.DBImport.Model
         public List<PropertyMapping> PropertyMappings { get; set; }  //  if only basic editing is required
 
         public List<ForeignKeyMapping> ForeignKeyMappings { get; set; }  // describes how foreign keys map to relations
-
+        public TableMapping()
+        {
+            this.IgnoreColumns=new List<string>();
+            this.IgnoreForeignKeyConstraints=new List<string>();
+            this.IgnoreUniqueKeyConstraints=new List<string>();
+            this.AddPropertiesToSchema=new List<Property>();
+            this.PropertyMappings=new List<PropertyMapping>();
+            this.ForeignKeyMappings=new List<ForeignKeyMapping>();
+        }
         //  Other notes -
         //  Self referencing foriegn keys become self relations.
         //  If table is made cannedlist, other tables which have foreign key to CannedListKeyColumn will get a property of datatype 'cannedlist'.
@@ -86,6 +94,10 @@ namespace Appacitive.Tools.DBImport.Model
     [Serializable]
     public class ForeignKeyMapping
     {
+        public ForeignKeyMapping()
+        {
+            this.AddPropertiesToRelation=new List<Property>();
+        }
         public string ForeignKeyName { get; set; }
 
         public bool KeepNameAsIs { get; set; }

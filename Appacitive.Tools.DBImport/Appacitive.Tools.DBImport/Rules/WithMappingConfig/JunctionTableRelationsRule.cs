@@ -11,10 +11,14 @@ namespace Appacitive.Tools.DBImport
         public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
-            var tableConfig =
+            TableMapping tableConfig = null;
+            if (mappingConfig != null && mappingConfig.TableMappings != null)
+                tableConfig =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
-            if (tableConfig != null && !tableConfig.IsJunctionTable) return;
+            if(tableConfig == null) return;
+
+            if (tableConfig.IsJunctionTable == false) return;
 
             var juncColA = table.Columns.First(col => col.Name.Equals(tableConfig.JunctionsSideAColumn));
             var juncColB = table.Columns.First(col => col.Name.Equals(tableConfig.JunctionsSideBColumn));

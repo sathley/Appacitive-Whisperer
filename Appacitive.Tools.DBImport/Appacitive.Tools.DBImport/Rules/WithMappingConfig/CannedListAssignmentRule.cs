@@ -11,38 +11,57 @@ namespace Appacitive.Tools.DBImport
         public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
-            var tableConfig =
+            TableMapping tableConfig = null;
+            if (mappingConfig != null && mappingConfig.TableMappings != null)
+                tableConfig =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
             foreach (var column in table.Columns)
             {
                 foreach (var index in column.Indexes)
                 {
-                    if (index.Type.Equals("foreign") == false) return;
+                    if (index.Type.Equals("foreign") == false) continue;
                     var fKeyIndex = index as ForeignIndex;
                     
                     //  Get table that became cannedList
                     var referenceTable = database.Tables.Find(t => t.Name.Equals(fKeyIndex.ReferenceTableName));
+                    if(referenceTable == null)
+                        throw new Exception(string.Format("CannedList table '{0}' not found.",fKeyIndex.ReferenceTableName));
+
                     var referenceTableConfig =
                         mappingConfig.TableMappings.Find(conf => conf.TableName.Equals(referenceTable.Name));
+                    
                     if(referenceTableConfig == null || referenceTableConfig.MakeCannedList == false) return;
 
-                    var schemaName = tableConfig.KeepNameAsIs
+                    string schemaName;
+                    if (tableConfig == null)
+                        schemaName = table.Name;
+                    else
+                        schemaName = tableConfig.KeepNameAsIs
                                          ? table.Name
                                          : tableConfig.AppacitiveName;
+
                     var schema = input.Schemata.Find(s => s.Name.Equals(schemaName));
                     if (schema == null) return;
                     
                     string schemaPropertyName = string.Empty;
-                    var propertyConfig =tableConfig.PropertyMappings.Find(pm => pm.ColumnName.Equals(column.Name));
-                    if (propertyConfig == null)
+                    if(tableConfig==null)
+                    {
                         schemaPropertyName = column.Name;
+                    }
                     else
                     {
-                        schemaPropertyName = propertyConfig.KeepNameAsIs
-                                                 ? column.Name
-                                                 : propertyConfig.AppacitivePropertyName;
+                        var propertyConfig = tableConfig.PropertyMappings.Find(pm => pm.ColumnName.Equals(column.Name));
+                        if (propertyConfig == null)
+                            schemaPropertyName = column.Name;
+                        else
+                        {
+                            schemaPropertyName = propertyConfig.KeepNameAsIs
+                                                     ? column.Name
+                                                     : propertyConfig.AppacitivePropertyName;
+                        }
                     }
+                    
                     var schemaProperty = schema.Properties.Find(p => p.Name.Equals(schemaPropertyName));
                     if(schemaProperty==null) return;
 

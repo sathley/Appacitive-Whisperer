@@ -11,11 +11,16 @@ namespace Appacitive.Tools.DBImport
         public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
-            var tableConfig =
+            TableMapping tableConfig = null;
+            if (mappingConfig != null && mappingConfig.TableMappings != null)
+                tableConfig =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
+
+            if(tableConfig == null) return;
+
             //  If table is to be converted to a cannedList
-            if (tableConfig != null && tableConfig.MakeCannedList)
+            if (tableConfig.MakeCannedList)
             {
                 //  Ensure table contains key and value columns
                 if (table.Columns.Find(col => col.Name.Equals(tableConfig.CannedListKeyColumn)) == null ||

@@ -11,8 +11,17 @@ namespace Appacitive.Tools.DBImport
         public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
-            var tableConfig =
+            TableMapping tableConfig=null;
+            if (mappingConfig != null && mappingConfig.TableMappings != null)
+                tableConfig =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+            
+
+            if(tableConfig==null)
+            {
+                new RegularSchemaRuleWithNoConfig().Apply(database,mappingConfig,tableIndex,ref input);
+                return;
+            }
 
             if (tableConfig.IsJunctionTable || tableConfig.MakeCannedList)
                 return;
@@ -20,13 +29,18 @@ namespace Appacitive.Tools.DBImport
                              {
                                  Name = tableConfig.KeepNameAsIs ? table.Name : tableConfig.AppacitiveName,
                                  Description =
-                                     tableConfig.Description ?? string.Format("Schema for {0}", table.Name),
+                                     tableConfig.Description ?? string.Format("Schema for {0}.", table.Name),
                                  Properties = new List<Property>()
                              };
+
+            //  Validate schema name.
             if (StringValidationHelper.IsAlphanumeric(schema.Name) == false)
                 throw new Exception(string.Format("Incorrect name for schema '{0}'. It should be alphanumeric starting with alphabet.", schema.Name));
+
+            //  Add additional properties specified in the config.
             schema.Properties.AddRange(tableConfig.AddPropertiesToSchema);
-            //  Process columns
+
+            //  Process columns.
             foreach (var tableColumn in table.Columns)
             {
                 var property = new Property();
@@ -34,23 +48,28 @@ namespace Appacitive.Tools.DBImport
                 if (propertyConfig == null)
                 {
                     property.Name = tableColumn.Name;
-                    property.Description = string.Format("Property for {0}", property.Name);
+                    property.Description = string.Format("Property for {0}.", property.Name);
                 }
                 else
                 {
                     property.Name = propertyConfig.KeepNameAsIs
                                         ? tableColumn.Name
                                         : propertyConfig.AppacitivePropertyName;
-                    property.Description = string.IsNullOrEmpty(property.Description)
-                                               ? string.Format("Property for {0}", property.Name)
-                                               : propertyConfig.Description;
+                    property.Description = propertyConfig.Description ??
+                                           string.Format("Property for {0}", property.Name);
                 } 
                 
+                //  Validate property name.
+                if (StringValidationHelper.IsAlphanumeric(property.Name) == false)
+                    throw new Exception(string.Format("Incorrect name for property '{0}' in schema '{1}'. It should be alphanumeric starting with alphabet.", property.Name, schema.Name));
+
+                //  Add Appacitive business validations according to constraints on columns.
                 foreach (var constraint in tableColumn.Constraints)
                 {
                     ConstraintsHelper.Process(constraint,ref property);
                 }
 
+                //  Figure out Appacitive datatype from database column datatype
                 property.DataType = DataTypeHelper.FigureDataType(tableColumn);
                 
                 schema.Properties.Add(property);

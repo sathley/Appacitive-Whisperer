@@ -15,7 +15,7 @@ namespace Appacitive.Tools.DBImport
             {
                 foreach (var index in column.Indexes)
                 {
-                    if (index.Type.Equals("foreign") == false) return;
+                    if (index.Type.Equals("foreign") == false) continue;
                     var fKeyIndex = index as ForeignIndex;
                     var relation = new Relation();
 

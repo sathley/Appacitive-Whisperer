@@ -6,13 +6,22 @@ using Appacitive.Tools.DBImport.Model;
 
 namespace Appacitive.Tools.DBImport
 {
-    public class RegularRelationRuleWithConfig : IRule
+    public class RegularRelationRule : IRule
     {
         public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
-            var tableConfig =
+            TableMapping tableConfig = null;
+            if (mappingConfig != null && mappingConfig.TableMappings != null)
+                tableConfig =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+
+            if (tableConfig == null)
+            {
+                new RegularRelationRuleWithNoMapping().Apply(database, mappingConfig, tableIndex, ref input);
+                return;
+            }
+
 
             if (tableConfig != null && (tableConfig.MakeCannedList || tableConfig.IsJunctionTable)) return;
             

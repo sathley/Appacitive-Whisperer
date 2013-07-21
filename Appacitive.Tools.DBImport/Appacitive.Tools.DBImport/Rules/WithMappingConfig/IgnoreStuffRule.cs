@@ -11,7 +11,9 @@ namespace Appacitive.Tools.DBImport
         public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
-            var tableMapping =
+            TableMapping tableMapping = null;
+            if(mappingConfig!=null && mappingConfig.TableMappings!=null)
+                tableMapping =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
             //  Remove ignored columns

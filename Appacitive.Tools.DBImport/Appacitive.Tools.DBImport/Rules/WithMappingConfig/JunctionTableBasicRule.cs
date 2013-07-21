@@ -11,10 +11,14 @@ namespace Appacitive.Tools.DBImport
         public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
-            var tableConfig =
+            TableMapping tableConfig = null;
+            if (mappingConfig != null && mappingConfig.TableMappings != null)
+                tableConfig =
                     mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
-            if(tableConfig != null && tableConfig.MakeCannedList) 
+            if(tableConfig == null) return;
+
+            if (tableConfig.MakeCannedList && tableConfig.IsJunctionTable) 
                 throw new Exception("Same table can't be marked as both CannedList and Junction Table.");
 
             //  Steps to take if this table is a mapping table in many-to-many relationship.
