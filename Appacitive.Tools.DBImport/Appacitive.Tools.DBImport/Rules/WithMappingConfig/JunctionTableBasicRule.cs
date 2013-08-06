@@ -8,34 +8,36 @@ namespace Appacitive.Tools.DBImport
 {
     class JunctionTableBasicRule : IRule
     {
-        public void Apply(Database database, List<TableMapping> mappingConfig, int tableIndex, ref AppacitiveInput input)
+        public void Apply(Database database, List<TableMapping> tableMappings, int tableIndex, ref AppacitiveInput input)
         {
-            var table = database.Tables[tableIndex];
-            TableMapping tableConfig = null;
-            if (mappingConfig != null)
-                tableConfig =
-                    mappingConfig.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+            var currentTable = database.Tables[tableIndex];
 
-            if(tableConfig == null) return;
+            TableMapping tableConfigForCurrentTable = null;
+            if (tableMappings != null && tableMappings.Count != 0)
+                tableConfigForCurrentTable = tableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
-            if (tableConfig.MakeCannedList && tableConfig.IsJunctionTable) 
+            //  This rule does not apply in absense of table mapping for this table.
+            if (tableConfigForCurrentTable == null)
+                return;
+
+            if (tableConfigForCurrentTable.MakeCannedList && tableConfigForCurrentTable.IsJunctionTable)
                 throw new Exception("Same table can't be marked as both CannedList and Junction Table.");
 
-            //  Steps to take if this table is a mapping table in many-to-many relationship.
-            if (tableConfig != null && tableConfig.IsJunctionTable)
+            //  Steps to take if this table is a mapping table in a many-to-many relationship.
+            if (tableConfigForCurrentTable.IsJunctionTable)
             {
-                var columnA = table.Columns.First(col => col.Name.Equals(tableConfig.JunctionsSideAColumn));
-                var columnB = table.Columns.First(col => col.Name.Equals(tableConfig.JunctionsSideBColumn));
+                var columnA = currentTable.Columns.First(col => col.Name.Equals(tableConfigForCurrentTable.JunctionsSideAColumn, StringComparison.InvariantCultureIgnoreCase));
+                var columnB = currentTable.Columns.First(col => col.Name.Equals(tableConfigForCurrentTable.JunctionsSideBColumn, StringComparison.InvariantCultureIgnoreCase));
                 if (columnA == null || columnB == null)
                 {
-                    throw new Exception("Incorrect mapping tables columns.");
+                    throw new Exception(string.Format("Incorrect mapping tables columns for junction table '{0}'.", currentTable.Name));
                 }
 
-                if(columnA.Indexes.Exists(i=>i.Type.Equals("foriegn"))==false || columnA.Indexes.Exists(i=>i.Type.Equals("foreign"))==false)
-                    throw new Exception("Junction tables both columns (A and B) must have a foreign key index.");
+                if (columnA.Indexes.Exists(i => i.Type.Equals("foreign")) == false || columnB.Indexes.Exists(i => i.Type.Equals("foreign")) == false)
+                    throw new Exception(string.Format("Junction tables '{2}' both columns ('{0}' and '{1}') must have a foreign key index.", columnA.Name, columnB.Name, currentTable.Name));
             }
 
-            //  The relation will be created later in another rule
+            //  The relation will be created later in another rule. This was just a sanity check.
         }
     }
 }

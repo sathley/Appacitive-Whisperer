@@ -8,34 +8,37 @@ namespace Appacitive.Tools.DBImport
 {
     public class IgnoreStuffRule : IRule
     {
-        public void Apply(Database database, List<TableMapping> mappingConfig, int tableIndex, ref AppacitiveInput input)
+        public void Apply(Database database, List<TableMapping> tableMappings, int tableIndex, ref AppacitiveInput input)
         {
-            var table = database.Tables[tableIndex];
-            TableMapping tableMapping = null;
-            if(mappingConfig!=null)
-                tableMapping =
-                    mappingConfig.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+            var currentTable = database.Tables[tableIndex];
+
+            TableMapping tableMappingForCurrentTable = null;
+            if (tableMappings != null && tableMappings.Count != 0)
+                tableMappingForCurrentTable = tableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+
+            //  In absense of table mapping, this rule does not apply.
+            if (tableMappingForCurrentTable == null) 
+                return;
 
             //  Remove ignored columns
-            if (tableMapping == null) return;
-            foreach (var ignoredColumn in tableMapping.IgnoreColumns)
+            foreach (var ignoredColumn in tableMappingForCurrentTable.IgnoreColumns)
             {
-                table.Columns.RemoveAll(col => col.Name.Equals(ignoredColumn, StringComparison.InvariantCultureIgnoreCase));
+                currentTable.Columns.RemoveAll(col => col.Name.Equals(ignoredColumn, StringComparison.InvariantCultureIgnoreCase));
             }
 
             //  Remove ignored foreign key constraints
-            foreach (var ignoredFKey in tableMapping.IgnoreForeignKeyConstraints)
+            foreach (var ignoredFKey in tableMappingForCurrentTable.IgnoreForeignKeyConstraints)
             {
-                foreach (var column in table.Columns)
+                foreach (var column in currentTable.Columns)
                 {
                     column.Indexes.RemoveAll(i => i.Type.Equals("foreign") && i.Name.Equals(ignoredFKey));
                 }
             }
 
             //  Remove ignored unique key constraints
-            foreach (var ignoredUKey in tableMapping.IgnoreUniqueKeyConstraints)
+            foreach (var ignoredUKey in tableMappingForCurrentTable.IgnoreUniqueKeyConstraints)
             {
-                foreach (var column in table.Columns)
+                foreach (var column in currentTable.Columns)
                 {
                     column.Indexes.RemoveAll(i => i.Type.Equals("unique") && i.Name.Equals(ignoredUKey));
                 }

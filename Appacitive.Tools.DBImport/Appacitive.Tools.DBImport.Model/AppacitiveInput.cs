@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 
 namespace Appacitive.Tools.DBImport.Model
 {
+    [Serializable]
     public class AppacitiveInput
     {
         public AppacitiveInput()

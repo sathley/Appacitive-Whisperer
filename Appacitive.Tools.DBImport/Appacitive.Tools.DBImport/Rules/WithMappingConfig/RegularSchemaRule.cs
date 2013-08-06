@@ -8,28 +8,29 @@ namespace Appacitive.Tools.DBImport
 {
     public class RegularSchemaRule : IRule
     {
-        public void Apply(Database database, List<TableMapping> mappingConfig, int tableIndex, ref AppacitiveInput input)
+        public void Apply(Database database, List<TableMapping> tableMappings, int tableIndex, ref AppacitiveInput input)
         {
-            var table = database.Tables[tableIndex];
-            TableMapping tableConfig=null;
-            if (mappingConfig != null)
-                tableConfig =
-                    mappingConfig.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
-            
+            var currentTable = database.Tables[tableIndex];
 
-            if(tableConfig==null)
+            TableMapping tableConfigForCurrentTable = null;
+            if (tableMappings != null && tableMappings.Count != 0)
+                tableConfigForCurrentTable = tableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+
+            if (tableConfigForCurrentTable == null)
             {
-                new RegularSchemaRuleWithNoConfig().Apply(database,mappingConfig,tableIndex,ref input);
+                new RegularSchemaRuleWithNoConfig().Apply(database, tableMappings, tableIndex, ref input);
                 return;
             }
 
-            if (tableConfig.IsJunctionTable || tableConfig.MakeCannedList)
+            //  Don't convert junction tables or tables marked as cannedlists into schemas
+            if (tableConfigForCurrentTable.IsJunctionTable || tableConfigForCurrentTable.MakeCannedList)
                 return;
+
+            //  Create schema
             var schema = new Schema
                              {
-                                 Name = tableConfig.KeepNameAsIs ? table.Name : tableConfig.AppacitiveName,
-                                 Description =
-                                     tableConfig.Description ?? string.Format("Schema for {0}.", table.Name),
+                                 Name = tableConfigForCurrentTable.KeepNameAsIs ? currentTable.Name : tableConfigForCurrentTable.AppacitiveName,
+                                 Description = tableConfigForCurrentTable.Description ?? string.Format("Schema for {0}.", currentTable.Name),
                                  Properties = new List<Property>()
                              };
 
@@ -37,14 +38,18 @@ namespace Appacitive.Tools.DBImport
             if (StringValidationHelper.IsAlphanumeric(schema.Name) == false)
                 throw new Exception(string.Format("Incorrect name for schema '{0}'. It should be alphanumeric starting with alphabet.", schema.Name));
 
-            //  Add additional properties specified in the config.
-            schema.Properties.AddRange(tableConfig.AddPropertiesToSchema);
+            //  Validate names and add additional properties specified in the config.
+            foreach (var property in tableConfigForCurrentTable.AddPropertiesToSchema.Where(property => StringValidationHelper.IsAlphanumeric(property.Name) == false))
+            {
+                throw new Exception(string.Format("Incorrect name for property '{0}' in schema '{1}'. It should be alphanumeric starting with alphabet.", property.Name, schema.Name));
+            }
+            schema.Properties.AddRange(tableConfigForCurrentTable.AddPropertiesToSchema);
 
             //  Process columns.
-            foreach (var tableColumn in table.Columns)
+            foreach (var tableColumn in currentTable.Columns)
             {
                 var property = new Property();
-                var propertyConfig = tableConfig.PropertyMappings.First(pc => pc.ColumnName.Equals(tableColumn.Name));
+                var propertyConfig = tableConfigForCurrentTable.PropertyMappings.First(pc => pc.ColumnName.Equals(tableColumn.Name, StringComparison.InvariantCultureIgnoreCase));
                 if (propertyConfig == null)
                 {
                     property.Name = tableColumn.Name;
@@ -52,13 +57,10 @@ namespace Appacitive.Tools.DBImport
                 }
                 else
                 {
-                    property.Name = propertyConfig.KeepNameAsIs
-                                        ? tableColumn.Name
-                                        : propertyConfig.AppacitivePropertyName;
-                    property.Description = propertyConfig.Description ??
-                                           string.Format("Property for {0}", property.Name);
-                } 
-                
+                    property.Name = propertyConfig.KeepNameAsIs ? tableColumn.Name : propertyConfig.AppacitivePropertyName;
+                    property.Description = propertyConfig.Description ?? string.Empty;
+                }
+
                 //  Validate property name.
                 if (StringValidationHelper.IsAlphanumeric(property.Name) == false)
                     throw new Exception(string.Format("Incorrect name for property '{0}' in schema '{1}'. It should be alphanumeric starting with alphabet.", property.Name, schema.Name));
@@ -66,12 +68,12 @@ namespace Appacitive.Tools.DBImport
                 //  Add Appacitive business validations according to constraints on columns.
                 foreach (var constraint in tableColumn.Constraints)
                 {
-                    ConstraintsHelper.Process(constraint,ref property);
+                    ConstraintsHelper.Process(constraint, ref property);
                 }
 
                 //  Figure out Appacitive datatype from database column datatype
                 property.DataType = DataTypeHelper.FigureDataType(tableColumn);
-                
+
                 schema.Properties.Add(property);
             }
             input.Schemata.Add(schema);

@@ -49,6 +49,7 @@
     <Compile Include="CreateResult.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="DatabaseDetails.cs" />
+    <Compile Include="InputConfiguration.cs" />
     <Compile Include="InputConfigurationWithDatabaseStructure.cs" />
     <Compile Include="ForeignKeyMapping.cs" />
     <Compile Include="InputConfigurationWithDatabaseDetails.cs" />

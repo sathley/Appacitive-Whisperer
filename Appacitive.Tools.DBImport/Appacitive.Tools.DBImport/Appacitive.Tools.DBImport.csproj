@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Engine\EngineCore.cs" />
     <Compile Include="DBImport.cs" />
+    <Compile Include="GathererContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rules\IRule.cs" />
     <Compile Include="Rules\RulesProvider.cs" />

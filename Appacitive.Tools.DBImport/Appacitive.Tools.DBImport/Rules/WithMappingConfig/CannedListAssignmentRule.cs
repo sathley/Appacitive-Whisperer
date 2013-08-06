@@ -8,71 +8,69 @@ namespace Appacitive.Tools.DBImport
 {
     public class CannedListAssignmentRule : IRule
     {
-        public void Apply(Database database, List<TableMapping> mappingConfig, int tableIndex, ref AppacitiveInput input)
+        public void Apply(Database database, List<TableMapping> tableMappings, int tableIndex, ref AppacitiveInput input)
         {
-            var table = database.Tables[tableIndex];
-            TableMapping tableConfig = null;
-            if (mappingConfig != null)
-                tableConfig =
-                    mappingConfig.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+            var currentTable = database.Tables[tableIndex];
 
-            foreach (var column in table.Columns)
+            TableMapping tableConfig = null;
+            if (tableMappings != null && tableMappings.Count != 0)
+                tableConfig = tableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+
+            foreach (var column in currentTable.Columns)
             {
                 foreach (var index in column.Indexes)
                 {
-                    if (index.Type.Equals("foreign") == false) continue;
+                    if (index.Type.Equals("foreign") == false)
+                        continue;
+
                     var fKeyIndex = index as ForeignIndex;
-                    
+
                     //  Get table that became cannedList
-                    var referenceTable = database.Tables.Find(t => t.Name.Equals(fKeyIndex.ReferenceTableName));
-                    if(referenceTable == null)
-                        throw new Exception(string.Format("CannedList table '{0}' not found.",fKeyIndex.ReferenceTableName));
+                    var referenceTable = database.Tables.Find(t => t.Name.Equals(fKeyIndex.ReferenceTableName, StringComparison.InvariantCultureIgnoreCase));
+                    if (referenceTable == null)
+                        throw new Exception(string.Format("CannedList table '{0}' not found.", fKeyIndex.ReferenceTableName));
 
                     var referenceTableConfig =
-                        mappingConfig.Find(conf => conf.TableName.Equals(referenceTable.Name));
-                    
-                    if(referenceTableConfig == null || referenceTableConfig.MakeCannedList == false) return;
+                        tableMappings.Find(conf => conf.TableName.Equals(referenceTable.Name, StringComparison.InvariantCultureIgnoreCase));
+
+                    if (referenceTableConfig == null || referenceTableConfig.MakeCannedList == false)
+                        return;
 
                     string schemaName;
                     if (tableConfig == null)
-                        schemaName = table.Name;
+                        schemaName = currentTable.Name;
                     else
-                        schemaName = tableConfig.KeepNameAsIs
-                                         ? table.Name
-                                         : tableConfig.AppacitiveName;
+                        schemaName = tableConfig.KeepNameAsIs ? currentTable.Name : tableConfig.AppacitiveName;
 
-                    var schema = input.Schemata.Find(s => s.Name.Equals(schemaName));
-                    if (schema == null) return;
-                    
+                    var schema = input.Schemata.Find(s => s.Name.Equals(schemaName, StringComparison.InvariantCultureIgnoreCase));
+                    if (schema == null)
+                        return;
+
                     string schemaPropertyName = string.Empty;
-                    if(tableConfig==null)
+                    if (tableConfig == null)
                     {
                         schemaPropertyName = column.Name;
                     }
                     else
                     {
-                        var propertyConfig = tableConfig.PropertyMappings.Find(pm => pm.ColumnName.Equals(column.Name));
+                        var propertyConfig = tableConfig.PropertyMappings.Find(pm => pm.ColumnName.Equals(column.Name, StringComparison.InvariantCultureIgnoreCase));
                         if (propertyConfig == null)
                             schemaPropertyName = column.Name;
                         else
                         {
-                            schemaPropertyName = propertyConfig.KeepNameAsIs
-                                                     ? column.Name
-                                                     : propertyConfig.AppacitivePropertyName;
+                            schemaPropertyName = propertyConfig.KeepNameAsIs ? column.Name : propertyConfig.AppacitivePropertyName;
                         }
                     }
-                    
-                    var schemaProperty = schema.Properties.Find(p => p.Name.Equals(schemaPropertyName));
-                    if(schemaProperty==null) return;
+
+                    var schemaProperty = schema.Properties.Find(p => p.Name.Equals(schemaPropertyName, StringComparison.InvariantCultureIgnoreCase));
+                    if (schemaProperty == null)
+                        return;
 
                     schemaProperty.AreValuesFromCannedList = true;
-                    schemaProperty.CannedListName = referenceTableConfig.KeepNameAsIs
-                                                        ? referenceTable.Name
-                                                        : referenceTableConfig.AppacitiveName;
-                    
+                    schemaProperty.CannedListName = referenceTableConfig.KeepNameAsIs ? referenceTable.Name : referenceTableConfig.AppacitiveName;
+
                     //  Mark index as cannedList index
                     index.Type = "cannedlist-foreign";
-
                 }
             }
         }

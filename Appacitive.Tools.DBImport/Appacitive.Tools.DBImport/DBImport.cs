@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Appacitive.Tools.DBImport.Model;
-using Appacitive.Tools.DBImport.MySQL;
 
 namespace Appacitive.Tools.DBImport
 {
@@ -24,25 +22,8 @@ namespace Appacitive.Tools.DBImport
         {
             var whisperer = new AppacitiveWhisperer(config.AppacitiveDetails.APIKey, config.AppacitiveDetails.BlueprintId, config.AppacitiveDetails.AppacitiveBaseURL);
             
-            var input = new EngineCore().AppacitizeDatabase(config.Database, config.TableMappings);
-            whisperer.Whisper(input);
-        }
-    }
-
-    public static class GathererContext
-    {
-        public static Dictionary<string, IDataDefinitionGatherer> Gatherers { get; set; } 
-        static GathererContext()
-        {
-            Gatherers=new Dictionary<string, IDataDefinitionGatherer>()
-                {
-                    {"mysql",new MySqlDataDefinitionGatherer()},
-                };
-        }
-
-        public static IDataDefinitionGatherer GetGatherer(string dbType)
-        {
-            return Gatherers[dbType];
+            var appacitiveInput = new EngineCore().AppacitizeDatabase(config.Database, config.TableMappings);
+            whisperer.Whisper(appacitiveInput);
         }
     }
 }

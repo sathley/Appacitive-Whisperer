@@ -12,45 +12,25 @@ namespace Appacitive.Tools.DBImport
         {
             var result = new AppacitiveInput();
 
-
-            var rules = RulesProvider.GetBasicRules();
-            foreach (var rule in rules)
+            //  Step 1. Apply basic rules
+            var basicRules = RulesProvider.GetBasicRules();
+            foreach (var basicRule in basicRules)
             {
-                for (int i = 0; i < database.Tables.Count; i++)
+                for (var tableIndex = 0; tableIndex < database.Tables.Count; tableIndex++)
                 {
-                    rule.Apply(database, mappingConfig, i, ref result);
+                    basicRule.Apply(database, mappingConfig, tableIndex, ref result);
                 }
             }
 
-            rules = RulesProvider.GetAdvancedRules();
-            foreach (var rule in rules)
+            //  Step 2. Apply advanced rules
+            var advancedRules = RulesProvider.GetAdvancedRules();
+            foreach (var advancedRule in advancedRules)
             {
-                for (int i = 0; i < database.Tables.Count; i++)
+                for (var tableIndex = 0; tableIndex < database.Tables.Count; tableIndex++)
                 {
-                    rule.Apply(database, mappingConfig, i, ref result);
+                    advancedRule.Apply(database, mappingConfig, tableIndex, ref result);
                 }
             }
-
-            //for (int i = 0; i < database.Tables.Count; i++)
-            //{
-            //    TableMapping tableConfig = null;
-            //    List<IRule> rules = null;
-            //    if (mappingConfig != null && mappingConfig.TableMappings != null)
-            //    {
-            //        rules = mappingConfig.TableMappings.Exists(tm =>
-            //                                                   tm.TableName.Equals(database.Tables[i].Name,
-            //                                                                       StringComparison.InvariantCultureIgnoreCase)) ? RulesProvider.GetRulesForWithMappingConfig() : RulesProvider.GetRulesForWithoutMappingConfig();
-            //    }
-            //    else
-            //    {
-            //        rules = RulesProvider.GetRulesForWithoutMappingConfig();
-            //    }
-            //    if (rules != null)
-            //        foreach (var rule in rules)
-            //        {
-            //            rule.Apply(database, mappingConfig, i, ref result);
-            //        }
-            //}
             return result;
 
         }

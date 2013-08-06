@@ -65,7 +65,7 @@ namespace Appacitive.Tools.DBImport.Model
             this.ForeignKeyMappings=new List<ForeignKeyMapping>();
         }
         //  Other notes -
-        //  Self referencing foriegn keys become self relations.
+        //  Self referencing foreign keys become self relations.
         //  If table is made cannedlist, other tables which have foreign key to CannedListKeyColumn will get a property of datatype 'cannedlist'.
     }
 }
