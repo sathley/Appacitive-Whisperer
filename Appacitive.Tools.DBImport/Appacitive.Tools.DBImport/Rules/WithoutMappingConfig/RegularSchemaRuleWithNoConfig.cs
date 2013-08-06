@@ -8,7 +8,7 @@ namespace Appacitive.Tools.DBImport
 {
     class RegularSchemaRuleWithNoConfig : IRule
     {
-        public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref Model.AppacitiveInput input)
+        public void Apply(Database database, List<TableMapping> mappingConfig, int tableIndex, ref Model.AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
             var schema = new Schema

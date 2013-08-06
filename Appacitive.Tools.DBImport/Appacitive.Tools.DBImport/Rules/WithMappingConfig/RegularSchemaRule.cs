@@ -8,13 +8,13 @@ namespace Appacitive.Tools.DBImport
 {
     public class RegularSchemaRule : IRule
     {
-        public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
+        public void Apply(Database database, List<TableMapping> mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
             TableMapping tableConfig=null;
-            if (mappingConfig != null && mappingConfig.TableMappings != null)
+            if (mappingConfig != null)
                 tableConfig =
-                    mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+                    mappingConfig.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
             
 
             if(tableConfig==null)

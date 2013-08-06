@@ -8,7 +8,7 @@ namespace Appacitive.Tools.DBImport
 {
     public class RegularRelationRuleWithNoMapping : IRule
     {
-        public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
+        public void Apply(Database database, List<TableMapping> mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
             foreach (var column in table.Columns)

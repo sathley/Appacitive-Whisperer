@@ -43,16 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppacitiveDetails.cs" />
     <Compile Include="AppacitiveInput.cs" />
     <Compile Include="CannedList.cs" />
     <Compile Include="CreateResult.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="Input.cs" />
-    <Compile Include="MappingConfig.cs" />
+    <Compile Include="DatabaseDetails.cs" />
+    <Compile Include="InputConfigurationWithDatabaseStructure.cs" />
+    <Compile Include="ForeignKeyMapping.cs" />
+    <Compile Include="InputConfigurationWithDatabaseDetails.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Property.cs" />
+    <Compile Include="PropertyMapping.cs" />
     <Compile Include="Relation.cs" />
     <Compile Include="Schema.cs" />
+    <Compile Include="TableMapping.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

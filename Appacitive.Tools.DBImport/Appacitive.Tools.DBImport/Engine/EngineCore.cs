@@ -8,7 +8,7 @@ namespace Appacitive.Tools.DBImport
 {
     public class EngineCore
     {
-        public AppacitiveInput AppacitizeDatabase(Database database, MappingConfig mappingConfig)
+        public AppacitiveInput AppacitizeDatabase(Database database, List<TableMapping> mappingConfig)
         {
             var result = new AppacitiveInput();
 

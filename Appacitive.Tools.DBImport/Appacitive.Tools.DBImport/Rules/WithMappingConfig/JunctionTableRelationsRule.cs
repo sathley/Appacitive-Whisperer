@@ -8,13 +8,13 @@ namespace Appacitive.Tools.DBImport
 {
     public class JunctionTableRelationsRule : IRule
     {
-        public void Apply(Database database, MappingConfig mappingConfig, int tableIndex, ref AppacitiveInput input)
+        public void Apply(Database database, List<TableMapping> mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
             var table = database.Tables[tableIndex];
             TableMapping tableConfig = null;
-            if (mappingConfig != null && mappingConfig.TableMappings != null)
+            if (mappingConfig != null)
                 tableConfig =
-                    mappingConfig.TableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+                    mappingConfig.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
 
             if(tableConfig == null) return;
 
@@ -56,7 +56,7 @@ namespace Appacitive.Tools.DBImport
             var tableA = database.Tables.First(t => t.Name.Equals(juncColAfKeyIndex.ReferenceTableName));
             if(tableA==null)
                 throw new Exception(string.Format("No table found by name '{0}' for relation '{1}'.", juncColAfKeyIndex.ReferenceTableName,relation.Name));
-            var tableAConf = mappingConfig.TableMappings.Find(conf => conf.TableName.Equals(tableA.Name));
+            var tableAConf = mappingConfig.Find(conf => conf.TableName.Equals(tableA.Name));
             
             if (tableAConf == null)
                 relation.EndPointA.SchemaName = tableA.Name;
@@ -67,7 +67,7 @@ namespace Appacitive.Tools.DBImport
             var tableB = database.Tables.First(t => t.Name.Equals(juncColBFKeyIndex.ReferenceTableName));
             if (tableB == null)
                 throw new Exception(string.Format("No table found by name '{0}' for relation '{1}'.", juncColAfKeyIndex.ReferenceTableName, relation.Name));
-            var tableBConf = mappingConfig.TableMappings.Find(conf => conf.TableName.Equals(tableB.Name));
+            var tableBConf = mappingConfig.Find(conf => conf.TableName.Equals(tableB.Name));
             
             if (tableBConf == null)
                 relation.EndPointB.SchemaName = tableB.Name;
