@@ -32,8 +32,6 @@ namespace Appacitive.Tools.DBImport
                 }
             }
             return result;
-
         }
-
     }
 }

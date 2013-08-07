@@ -102,7 +102,7 @@ namespace Appacitive.Tools.DBImport
                     return;
 
                 var property = new Property();
-                var propertyConfig = tableConfigForCurrentTable.PropertyMappings.First(pc => pc.ColumnName.Equals(column.Name,StringComparison.InvariantCultureIgnoreCase));
+                var propertyConfig = tableConfigForCurrentTable.PropertyMappings.FirstOrDefault(pc => pc.ColumnName.Equals(column.Name,StringComparison.InvariantCultureIgnoreCase));
                 if (propertyConfig == null)
                 {
                     property.Name = column.Name;

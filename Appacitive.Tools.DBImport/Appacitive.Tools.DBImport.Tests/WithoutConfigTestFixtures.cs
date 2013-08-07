@@ -11,16 +11,19 @@ namespace Appacitive.Tools.DBImport.Tests
     {
         public void TestWithoutConfigWhisperingUsingMysqlDB()
         {
-            var connectionString = ConfigurationManager.AppSettings["mysql-connectionstring"];
-            var database = ConfigurationManager.AppSettings["mysql-database"];
+            //var connectionString = ConfigurationManager.AppSettings["mysql-connectionstring"];
+            var connectionString = "Server=localhost;Database=dgossamercore;Uid=root;Pwd=test123!@#;";
+
+            //var database = ConfigurationManager.AppSettings["mysql-database"];
+            var database = "whisperer";
             var dbImport = new DBImport();
             dbImport.Import(new InputConfigurationWithDatabaseDetails()
                                 {
                                     AppacitiveDetails = new AppacitiveDetails()
                                               {
 
-                                                  BlueprintId = "__EditableBlueprint_AppacitiveApplication2",
-                                                  APIKey = "2",
+                                                  BlueprintId = "__EditableBlueprint_gossamercoredb",
+                                                  APIKey = "D9Z4d1Qk3G0789nemYl+cqsPVSPOGQuPtxy67+gFS1Q=",
                                                   AppacitiveBaseURL = ConfigurationManager.AppSettings["appacitive-base-url"]
                                               },
                                     DatabaseDetails = new DatabaseDetails()

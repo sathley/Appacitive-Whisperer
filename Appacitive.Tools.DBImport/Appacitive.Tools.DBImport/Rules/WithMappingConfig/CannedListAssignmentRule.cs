@@ -11,10 +11,14 @@ namespace Appacitive.Tools.DBImport
         public void Apply(Database database, List<TableMapping> tableMappings, int tableIndex, ref AppacitiveInput input)
         {
             var currentTable = database.Tables[tableIndex];
-
+            
             TableMapping tableConfig = null;
             if (tableMappings != null && tableMappings.Count != 0)
                 tableConfig = tableMappings.FirstOrDefault(t => t.TableName.Equals(database.Tables[tableIndex].Name, StringComparison.InvariantCultureIgnoreCase));
+            else
+            {
+                return;
+            }
 
             foreach (var column in currentTable.Columns)
             {

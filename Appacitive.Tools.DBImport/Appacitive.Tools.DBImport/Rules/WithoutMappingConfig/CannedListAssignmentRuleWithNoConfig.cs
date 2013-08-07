@@ -10,7 +10,7 @@ namespace Appacitive.Tools.DBImport
     {
         public void Apply(Database database, List<TableMapping> mappingConfig, int tableIndex, ref AppacitiveInput input)
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }

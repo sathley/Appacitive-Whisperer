@@ -11,16 +11,16 @@ namespace Appacitive.Tools.DBImport.Tests
     {
         public void WithConfigMysqlFixture()
         {
-            var connectionString = ConfigurationManager.AppSettings["mysql-connectionstring"];
-            var database = ConfigurationManager.AppSettings["mysql-database"];
+            var connectionString = "Server=localhost;Database=whisperer;Uid=root;Pwd=test123!@#;";
+            var database = "whisperer";
             var dbImport = new DBImport();
             dbImport.Import(new InputConfigurationWithDatabaseDetails()
             {
                 AppacitiveDetails = new AppacitiveDetails()
                 {
 
-                    BlueprintId = "__EditableBlueprint_AppacitiveApplication2",
-                    APIKey = "2",
+                    BlueprintId = "__EditableBlueprint_junctionTest",
+                    APIKey = "ZASGowUEjAy1hpCW9ewORveHSIbxXDO627dzULG/kGo=",
                     AppacitiveBaseURL = ConfigurationManager.AppSettings["appacitive-base-url"]
                 },
                 DatabaseDetails = new DatabaseDetails()
@@ -33,13 +33,15 @@ namespace Appacitive.Tools.DBImport.Tests
                                     {
                                         new TableMapping()
                                             {
-                                                TableName = "subject",
-                                                MakeCannedList = true,
-                                                CannedListDescriptionColumn = "name",
-                                                CannedListKeyColumn = "id",
-                                                CannedListValueColumn = "name",
-                                                KeepNameAsIs=true,
-                                                IsJunctionTable=false
+                                                TableName = "schemaproperty",
+                                                Description = "Relates schema and property",
+                                                AppacitiveName = "relation_schema_property",
+                                                IsJunctionTable = true,
+                                                JunctionALabel = "lbl_schema",
+                                                JunctionBLabel = "lbl_property",
+                                                JunctionTableRelationDescription = "Relates schema and property (for relation)",
+                                                JunctionsSideAColumn = "schemaid",
+                                                JunctionsSideBColumn = "propertyid"
                                             }
                                     }
             });

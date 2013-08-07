@@ -6,7 +6,7 @@ namespace Appacitive.Tools.DBImport.Model
     [Serializable]
     public class TableMapping
     {
-        //  basic
+        //  basic details
         public string TableName { get; set; }
 
         public bool KeepNameAsIs { get; set; }
@@ -35,6 +35,10 @@ namespace Appacitive.Tools.DBImport.Model
 
         public string JunctionsSideBColumn { get; set; }    //  other columns become relation properties
 
+        public string JunctionSideAfKeyIndexName { get; set; }
+
+        public string JunctionSideBfKeyIndexName { get; set; }
+
         public int JunctionaSideAMultiplicity { get; set; } //  -1 for *
 
         public int JunctionaSideBMultiplicity { get; set; }
@@ -55,6 +59,7 @@ namespace Appacitive.Tools.DBImport.Model
         public List<PropertyMapping> PropertyMappings { get; set; }  //  if only basic editing is required
 
         public List<ForeignKeyMapping> ForeignKeyMappings { get; set; }  // describes how foreign keys map to relations
+
         public TableMapping()
         {
             this.IgnoreColumns=new List<string>();
