@@ -60,14 +60,15 @@ namespace Appacitive.Tools.DBImport
                            Code = (string)jsonResponse["status"]["code"]
                        };
             if(result.Code == "200")
-                Logger.Log(string.Format("Successfully created schema '{0}'",schema.Name));
+                BasicLogger.Log(string.Format("Successfully created schema '{0}'",schema.Name));
             else
             {
-                Logger.Log(string.Format("Schema creation Failed for '{0}'",schema.Name));
-                Logger.Log("Request Data -");
-                Logger.Log(postData);
-                Logger.Log("Response Data -");
-                Logger.Log(responseFromServer);
+                BasicLogger.Log(string.Format("Schema creation Failed for '{0}'",schema.Name));
+                BasicLogger.Log("Request Data -");
+                BasicLogger.Log(postData);
+                BasicLogger.Log("Response Data -");
+                BasicLogger.Log(responseFromServer);
+                BasicLogger.Log("=============================================================================");
             }
             return result;
         }
@@ -100,14 +101,15 @@ namespace Appacitive.Tools.DBImport
                 Code = (string)jsonResponse["status"]["code"]
             };
             if (result.Code == "200")
-                Logger.Log(string.Format("Successfully created relation '{0}'", relation.Name));
+                BasicLogger.Log(string.Format("Successfully created relation '{0}'", relation.Name));
             else
             {
-                Logger.Log(string.Format("Relation creation Failed for '{0}'", relation.Name));
-                Logger.Log("Request Data -");
-                Logger.Log(postData);
-                Logger.Log("Response Data -");
-                Logger.Log(responseFromServer);
+                BasicLogger.Log(string.Format("Relation creation Failed for '{0}'", relation.Name));
+                BasicLogger.Log("Request Data -");
+                BasicLogger.Log(postData);
+                BasicLogger.Log("Response Data -");
+                BasicLogger.Log(responseFromServer);
+                BasicLogger.Log("=============================================================================");
             }
             return result;
         }
@@ -135,10 +137,22 @@ namespace Appacitive.Tools.DBImport
             reader.Close();
             dataStream.Close();
             response.Close();
-            return new CreateResult()
+            var result = new CreateResult()
             {
                 Code = (string)jsonResponse["status"]["code"]
             };
+            if (result.Code == "200")
+                BasicLogger.Log(string.Format("Successfully created cannedlist '{0}'", cannedList.Name));
+            else
+            {
+                BasicLogger.Log(string.Format("Cannedlist creation Failed for '{0}'", cannedList.Name));
+                BasicLogger.Log("Request Data -");
+                BasicLogger.Log(postData);
+                BasicLogger.Log("Response Data -");
+                BasicLogger.Log(responseFromServer);
+                BasicLogger.Log("=============================================================================");
+            }
+            return result;
         }
 
         public string AssembleSchema(Schema schema)
