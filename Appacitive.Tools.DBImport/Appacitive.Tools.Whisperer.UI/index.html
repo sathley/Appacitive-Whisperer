@@ -2,49 +2,102 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Appacitive Whisperer</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width">
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Appacitive Whisperer</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="js/vendor/jquery-1.9.1.min.js"></script>
+    <script src="js/vendor/bootstrap.min.js"></script>
+    <script src="js/vendor/springy.js"></script>
+    <script src="js/vendor/springyui.js"></script>
+    <!--<script src="js/vendor/jquery-ui.min.js"></script>-->
+    <!--<script src="js/vendor/jquery.jsPlumb-1.4.1-all-min.js"></script>-->
+    <link href="http://fonts.googleapis.com/css?family=Abel|Open+Sans:400,600" rel="stylesheet" />
 
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 7]>
+    <style>
+        /* http://css-tricks.com/perfect-full-page-background-image/ */
+        html {
+            /*background: url(img/6133364748_89f2365922_o.jpg) no-repeat center center fixed;*/
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        body {
+            padding-top: 20px;
+            font-size: 16px;
+            font-family: "Open Sans",serif;
+            background: transparent;
+        }
+
+        h4 {
+            font-family: "Abel", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 20px;
+        }
+
+        h1 {
+            font-family: "Abel", Arial, sans-serif;
+            font-weight: 400;
+            font-size: 40px;
+        }
+
+        /* Override B3 .panel adding a subtly transparent background */
+        .panel {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .margin-base-vertical {
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-        <!-- Add your site or application content here -->
-        <canvas id='canvas' height="300" width="300">
-            
-        </canvas>
-        
-        
-        
-        
-        
-        
-        
-        
+    <!-- Add your site or application content here -->
+    <div class="panel container">
+        <h1 class="text-center">&ldquo;Because a picture is worth a thousand words&hellip;&rdquo;</h1>
+        <div>
+            <label for="txtJson" class="label">Paste database json below</label>
+            <div>
+                <textarea cols="150" id="txtJson" class="input-large"></textarea>
+            </div>
+        </div>
+        <input type="button" style="margin-top: 20px" class="btn-primary btn-large" onclick="visualize();" value="Visualize" id="btnVisualize" />
+
+    </div>
+    <canvas id="divDatabase" width="600" height="600"></canvas>
 
 
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
-        <script src="js/plugins.js"></script>
-        <script src="js/main.js"></script>
+    <div class="panel-footer text-right">
+        <h4>Appacitive Software Pvt.Ltd.&trade;</h4>
+    </div>
 
-        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-        <!--<script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+    <!--<script>
             var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src='//www.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>-->
-    </body>
+</body>
 </html>

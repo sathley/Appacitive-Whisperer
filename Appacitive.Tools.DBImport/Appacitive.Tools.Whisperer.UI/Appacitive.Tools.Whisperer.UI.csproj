@@ -53,6 +53,7 @@
     <Content Include="apple-touch-icon-precomposed.png" />
     <Content Include="apple-touch-icon.png" />
     <Content Include="crossdomain.xml" />
+    <Content Include="css\bootstrap.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="humans.txt" />
     <Content Include="index.html" />
@@ -60,8 +61,13 @@
     <Content Include="css\normalize.css" />
     <Content Include="js\main.js" />
     <Content Include="js\plugins.js" />
+    <Content Include="js\vendor\bootstrap.min.js" />
     <Content Include="js\vendor\jquery-1.9.1.min.js" />
+    <Content Include="js\vendor\jquery-ui.min.js" />
+    <Content Include="js\vendor\jquery.jsPlumb-1.4.1-all-min.js" />
     <Content Include="js\vendor\modernizr-2.6.2.min.js" />
+    <Content Include="js\vendor\springy.js" />
+    <Content Include="js\vendor\springyui.js" />
     <Content Include="robots.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -74,6 +80,7 @@
     <Content Include=".htaccess" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="samplejson.js" />
     <Content Include="web.config" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
