@@ -19,11 +19,11 @@ namespace Appacitive.Tools.DBImport
             this.BaseURL = url;
         }
 
-        public string ApiKey { get; set; }
+        public string ApiKey { get; private set; }
 
-        public string BlueprintId { get; set; }
+        public string BlueprintId { get; private set; }
 
-        public string BaseURL { get; set; }
+        public string BaseURL { get; private set; }
 
         public void Whisper(AppacitiveInput input)
         {
@@ -32,7 +32,7 @@ namespace Appacitive.Tools.DBImport
             input.Relations.ForEach(r=>CreateRelation(r));
         }
 
-        public CreateResult CreateSchema(Schema schema)
+        private CreateResult CreateSchema(Schema schema)
         {
             WebRequest request = WebRequest.Create(string.Format("{0}/schema/{1}",BaseURL,BlueprintId));
             request.Method = "PUT";
@@ -53,7 +53,7 @@ namespace Appacitive.Tools.DBImport
             var jsonResponse = JObject.Parse(responseFromServer);
             
             reader.Close();
-            dataStream.Close();
+            if (dataStream != null) dataStream.Close();
             response.Close();
             var result =  new CreateResult()
                        {
@@ -73,7 +73,7 @@ namespace Appacitive.Tools.DBImport
             return result;
         }
 
-        public CreateResult CreateRelation(Relation relation)
+        private CreateResult CreateRelation(Relation relation)
         {
             WebRequest request = WebRequest.Create(string.Format("{0}/relation/{1}", BaseURL, BlueprintId));
             request.Method = "PUT";
@@ -94,7 +94,7 @@ namespace Appacitive.Tools.DBImport
             var jsonResponse = JObject.Parse(responseFromServer);
 
             reader.Close();
-            dataStream.Close();
+            if (dataStream != null) dataStream.Close();
             response.Close();
             var result = new CreateResult()
             {
@@ -114,7 +114,7 @@ namespace Appacitive.Tools.DBImport
             return result;
         }
 
-        public CreateResult CreateCannedList(CannedList cannedList)
+        private CreateResult CreateCannedList(CannedList cannedList)
         {
             WebRequest request = WebRequest.Create(string.Format("{0}/list/{1}", BaseURL, BlueprintId));
             request.Method = "PUT";
@@ -135,7 +135,7 @@ namespace Appacitive.Tools.DBImport
             var jsonResponse = JObject.Parse(responseFromServer);
 
             reader.Close();
-            dataStream.Close();
+            if (dataStream != null) dataStream.Close();
             response.Close();
             var result = new CreateResult()
             {
@@ -153,13 +153,6 @@ namespace Appacitive.Tools.DBImport
                 BasicLogger.Log("=============================================================================");
             }
             return result;
-        }
-
-        public string AssembleSchema(Schema schema)
-        {
-            var json = JsonConvert.SerializeObject(schema);
-            return json;
-
         }
     }
 }

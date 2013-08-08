@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IDataGatherer.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="IRelationalDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

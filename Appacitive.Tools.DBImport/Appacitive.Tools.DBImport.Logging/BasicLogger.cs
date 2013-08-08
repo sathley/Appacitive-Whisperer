@@ -4,6 +4,7 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
+using Appacitive.Tools.DBImport.Interfaces;
 
 namespace Appacitive.Tools.DBImport.Logging
 {
@@ -17,6 +18,7 @@ namespace Appacitive.Tools.DBImport.Logging
 
         private static bool _loggingEnable;
         private static string _path;
+
         public static void Log(string message)
         {
             if (_loggingEnable)
@@ -29,7 +31,7 @@ namespace Appacitive.Tools.DBImport.Logging
         {
             if (_loggingEnable)
             {
-                File.AppendAllLines(_path, new string[] { message });
+                File.AppendAllLines(_path, new[] { string.Format("Info     : {0}",message) });
             }
         }
 
@@ -37,7 +39,7 @@ namespace Appacitive.Tools.DBImport.Logging
         {
             if (_loggingEnable)
             {
-                File.AppendAllLines(_path, new string[] { message });
+                File.AppendAllLines(_path, new[] { string.Format("Warning  : {0}", message) });
             }
         }
 
@@ -45,7 +47,7 @@ namespace Appacitive.Tools.DBImport.Logging
         {
             if (_loggingEnable)
             {
-                File.AppendAllLines(_path, new string[] { message });
+                File.AppendAllLines(_path, new[] { string.Format("Error    : {0}", message) });
             }
         }
     }

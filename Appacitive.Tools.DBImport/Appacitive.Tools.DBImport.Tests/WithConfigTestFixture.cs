@@ -21,7 +21,7 @@ namespace Appacitive.Tools.DBImport.Tests
 
                     BlueprintId = "__EditableBlueprint_junctionTest",
                     APIKey = "ZASGowUEjAy1hpCW9ewORveHSIbxXDO627dzULG/kGo=",
-                    AppacitiveBaseURL = ConfigurationManager.AppSettings["appacitive-base-url"]
+                    AppacitiveBaseURL = ConfigurationManager.AppSettings["appacitive-base-url-stage"]
                 },
                 DatabaseDetails = new DatabaseDetails()
                   {

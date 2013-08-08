@@ -24,7 +24,7 @@ namespace Appacitive.Tools.DBImport.Tests
 
                                                   BlueprintId = "__EditableBlueprint_gossamercoredb",
                                                   APIKey = "D9Z4d1Qk3G0789nemYl+cqsPVSPOGQuPtxy67+gFS1Q=",
-                                                  AppacitiveBaseURL = ConfigurationManager.AppSettings["appacitive-base-url"]
+                                                  AppacitiveBaseURL = ConfigurationManager.AppSettings["appacitive-base-url-stage"]
                                               },
                                     DatabaseDetails = new DatabaseDetails()
                                       {

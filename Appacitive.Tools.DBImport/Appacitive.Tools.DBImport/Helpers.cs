@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Appacitive.Tools.DBImport.Model;
+using Newtonsoft.Json;
 
 namespace Appacitive.Tools.DBImport
 {
@@ -99,6 +100,14 @@ namespace Appacitive.Tools.DBImport
 
             //  default to string
             return "string";
+        }
+    }
+
+    public static class JSONHelper
+    {
+        public static string ToJSON(this Database database)
+        {
+            return JsonConvert.SerializeObject(database,Formatting.Indented);
         }
     }
 }

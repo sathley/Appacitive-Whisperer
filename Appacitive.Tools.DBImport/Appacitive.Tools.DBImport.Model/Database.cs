@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace Appacitive.Tools.DBImport.Model
 {
@@ -37,6 +39,7 @@ namespace Appacitive.Tools.DBImport.Model
 
         public string Name { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public DbDataType Type { get; set; }
 
         public List<Index> Indexes { get; set; }
@@ -83,6 +86,7 @@ namespace Appacitive.Tools.DBImport.Model
 
 #region Index
 
+    [JsonConverter(typeof(StringEnumConverter))]
     public enum IndexTypeEnum
     {
         Clustered,

@@ -129,7 +129,11 @@ namespace Appacitive.Tools.DBImport
                         propertyNameBuilder.Append("__");
                         propertyNameBuilder.Append(propName);
                     }
+                    uniqueCompositeProperty.Name = propertyNameBuilder.ToString();
                     uniqueCompositeProperty.IsUnique = true;
+                    uniqueCompositeProperty.DataType = "string";
+                    uniqueCompositeProperty.IsMandatory = true;
+                    uniqueCompositeProperty.Description = string.Format("Additional column for handling composite unique/primary key '{0}'",indexMap.Key);
                     schema.Properties.Add(uniqueCompositeProperty);
                 }
             }

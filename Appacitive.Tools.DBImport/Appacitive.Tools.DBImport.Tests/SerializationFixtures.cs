@@ -18,7 +18,7 @@ namespace Appacitive.Tools.DBImport.Tests
                                  Properties = new List<Property>()
                              };
             var whisperer = new AppacitiveWhisperer("","","");
-            var jsonSchema = whisperer.AssembleSchema(schema);
+            //var jsonSchema = whisperer.AssembleSchema(schema);
 
         }
     }

@@ -41,9 +41,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ILogger.cs" />
     <Compile Include="BasicLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Appacitive.Tools.DBImport.Interfaces\Appacitive.Tools.DBImport.Interfaces.csproj">
+      <Project>{3AC05C5D-5A09-4CF0-AAE9-38E995E5348F}</Project>
+      <Name>Appacitive.Tools.DBImport.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
