@@ -7,10 +7,13 @@ using Appacitive.Tools.DBImport.Model;
 
 namespace Appacitive.Tools.DBImport
 {
-    public static class StringValidationHelper
+    public static class NameValidationHelper
     {
         private static readonly Regex AphanumericRegex = new Regex(@"^[a-z]+[a-z0-9]*([_]*[a-z0-9])*[a-z0-9]*$", RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
+        private  static readonly List<string> BlacklistedNames=new List<string>()
+            {
+                "schema","relation","cannedlist","appacitive","gossamer","article","connection"
+            }; 
         public static bool IsNumeric(string value)
         {
             if (string.IsNullOrWhiteSpace(value) == true)
@@ -19,11 +22,15 @@ namespace Appacitive.Tools.DBImport
             return long.TryParse(value, out number);
         }
 
-        public static bool IsAlphanumeric(string value)
+        public static bool IsValidName(this string value)
         {
             if (string.IsNullOrWhiteSpace(value) == true)
                 return false;
-            return AphanumericRegex.IsMatch(value);
+            if (AphanumericRegex.IsMatch(value) == false)
+                return false;
+            if (BlacklistedNames.Contains(value.ToLower()) == true)
+                return false;
+            return true;
         }
     }
 
@@ -90,7 +97,7 @@ namespace Appacitive.Tools.DBImport
             if (column.Type == DbDataType.VarBinary || column.Type == DbDataType.Binary || column.Type == DbDataType.Image)
                 return "blob";
 
-
+            //  default to string
             return "string";
         }
     }

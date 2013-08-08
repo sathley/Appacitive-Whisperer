@@ -35,7 +35,7 @@ namespace Appacitive.Tools.DBImport
             relation.Name = tableConfigForCurrentTable.JunctionTableRelationName ?? string.Format("{0}_{1}", juncColAfKeyIndex.ReferenceTableName, juncColBfKeyIndex.ReferenceTableName);
 
             //  Validate relation name.
-            if (StringValidationHelper.IsAlphanumeric(relation.Name) == false)
+            if (relation.Name.IsValidName() == false)
                 throw new Exception(string.Format("Incorrect name for relation '{0}'. It should be alphanumeric starting with alphabet.", relation.Name));
 
             relation.Description = tableConfigForCurrentTable.JunctionTableRelationDescription ?? string.Empty;
@@ -45,12 +45,12 @@ namespace Appacitive.Tools.DBImport
 
             relation.EndPointA.Label = tableConfigForCurrentTable.JunctionALabel ?? juncColAfKeyIndex.ReferenceColumnName;
 
-            if (StringValidationHelper.IsAlphanumeric(relation.EndPointA.Label) == false)
+            if (relation.EndPointA.Label.IsValidName() == false)
                 throw new Exception(string.Format("Incorrect name for label '{0}' in relation '{1}'. It should be alphanumeric starting with alphabet.", relation.EndPointA.Label, relation.Name));
 
             relation.EndPointB.Label = tableConfigForCurrentTable.JunctionBLabel ?? juncColBfKeyIndex.ReferenceColumnName;
 
-            if (StringValidationHelper.IsAlphanumeric(relation.EndPointB.Label) == false)
+            if (relation.EndPointB.Label.IsValidName() == false)
                 throw new Exception(string.Format("Incorrect name for label '{0}' in relation '{1}'. It should be alphanumeric starting with alphabet.", relation.EndPointB.Label, relation.Name));
 
             relation.EndPointA.Multiplicity = tableConfigForCurrentTable.JunctionaSideAMultiplicity == 0
@@ -88,7 +88,7 @@ namespace Appacitive.Tools.DBImport
             //  Add additional properties supplied and validate thier names
             foreach (var property in tableConfigForCurrentTable.AddPropertiesToSchema)
             {
-                if (StringValidationHelper.IsAlphanumeric(property.Name) == false)
+                if (property.Name.IsValidName() == false)
                     throw new Exception(string.Format("Incorrect name for property '{0}' in relation '{1}'. It should be alphanumeric starting with alphabet.", property.Name, relation.Name));
             }
             relation.Properties.AddRange(tableConfigForCurrentTable.AddPropertiesToSchema);
@@ -115,7 +115,7 @@ namespace Appacitive.Tools.DBImport
                 }
 
                 //  Validate relation property name.
-                if (StringValidationHelper.IsAlphanumeric(property.Name) == false)
+                if (property.Name.IsValidName() == false)
                     throw new Exception(string.Format("Incorrect name for property '{0}' in relation '{1}'. It should be alphanumeric starting with alphabet.", property.Name, relation.Name));
 
                 //  Figure out Appacitive datatype

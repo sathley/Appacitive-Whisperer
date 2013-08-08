@@ -42,7 +42,7 @@ namespace Appacitive.Tools.DBImport
             var cannedListName = tableMappingForCurrentTable.KeepNameAsIs ? currentTable.Name : tableMappingForCurrentTable.AppacitiveName;
                 
             //  Validate cannedlist name
-            if (StringValidationHelper.IsAlphanumeric(cannedListName) == false)
+            if (cannedListName.IsValidName() == false)
                 throw new Exception(string.Format("Incorrect name for cannedlist '{0}'. It should be alphanumeric starting with alphabet.", cannedListName));
 
             //  Add the cannedList to result

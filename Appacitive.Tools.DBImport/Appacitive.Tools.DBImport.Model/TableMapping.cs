@@ -35,10 +35,6 @@ namespace Appacitive.Tools.DBImport.Model
 
         public string JunctionsSideBColumn { get; set; }    //  other columns become relation properties
 
-        public string JunctionSideAfKeyIndexName { get; set; }
-
-        public string JunctionSideBfKeyIndexName { get; set; }
-
         public int JunctionaSideAMultiplicity { get; set; } //  -1 for *
 
         public int JunctionaSideBMultiplicity { get; set; }

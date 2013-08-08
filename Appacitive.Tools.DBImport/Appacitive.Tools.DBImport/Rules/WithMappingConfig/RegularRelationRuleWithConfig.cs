@@ -65,7 +65,7 @@ namespace Appacitive.Tools.DBImport
                         relation.Description = fKeyMapping.Description ?? string.Empty;
                         foreach (var property in fKeyMapping.AddPropertiesToRelation)
                         {
-                            if (StringValidationHelper.IsAlphanumeric(property.Name) == false)
+                            if (property.Name.IsValidName() == false)
                                 throw new Exception(string.Format("Incorrect name for property '{0}' in relation '{1}'. It should be alphanumeric starting with alphabet.", property.Name, relation.Name));
                         }
                         relation.Properties.AddRange(fKeyMapping.AddPropertiesToRelation);
@@ -101,7 +101,7 @@ namespace Appacitive.Tools.DBImport
                                                  };
                     }
                     //  Validate relation name
-                    if (StringValidationHelper.IsAlphanumeric(relation.Name) == false)
+                    if (relation.Name.IsValidName() == false)
                         throw new Exception(string.Format("Incorrect name for relation '{0}'. It should be alphanumeric starting with alphabet.", relation.Name));
 
                     input.Relations.Add(relation);

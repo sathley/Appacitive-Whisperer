@@ -22,6 +22,8 @@ namespace Appacitive.Tools.DBImport
                 return;
             }
 
+            var indexMapping = new Dictionary<string, Dictionary<string, string>>();    //(indexName => (columnName=> coorespondingPropertyName))
+
             //  Don't convert junction tables or tables marked as cannedlists into schemas
             if (tableConfigForCurrentTable.IsJunctionTable || tableConfigForCurrentTable.MakeCannedList)
                 return;
@@ -34,14 +36,14 @@ namespace Appacitive.Tools.DBImport
                                  Properties = new List<Property>()
                              };
 
-            //  Validate schema name.
-            if (StringValidationHelper.IsAlphanumeric(schema.Name) == false)
-                throw new Exception(string.Format("Incorrect name for schema '{0}'. It should be alphanumeric starting with alphabet.", schema.Name));
+            //  Validate schema name
+            if (schema.Name.IsValidName() == false)
+                throw new Exception(string.Format("Incorrect name for schema '{0}'. It should be alphanumeric, starting with alphabet.", schema.Name));
 
-            //  Validate names and add additional properties specified in the config.
-            foreach (var property in tableConfigForCurrentTable.AddPropertiesToSchema.Where(property => StringValidationHelper.IsAlphanumeric(property.Name) == false))
+            //  Validate names and add additional properties specified in the config
+            foreach (var property in tableConfigForCurrentTable.AddPropertiesToSchema.Where(property => property.Name.IsValidName() == false))
             {
-                throw new Exception(string.Format("Incorrect name for property '{0}' in schema '{1}'. It should be alphanumeric starting with alphabet.", property.Name, schema.Name));
+                throw new Exception(string.Format("Incorrect name for property '{0}' in schema '{1}'. It should be alphanumeric, starting with alphabet.", property.Name, schema.Name));
             }
             schema.Properties.AddRange(tableConfigForCurrentTable.AddPropertiesToSchema);
 
@@ -54,16 +56,41 @@ namespace Appacitive.Tools.DBImport
                 {
                     property.Name = tableColumn.Name;
                     property.Description = string.Format("Property for {0}.", property.Name);
+
+                    //  Compute index mappings
+                    foreach (var index in tableColumn.Indexes)
+                    {
+                        if (index.Type.Equals("unique") || index.Type.Equals("primary"))
+                        {
+                            if(indexMapping.ContainsKey(index.Name) ==false)
+                                indexMapping[index.Name] = new Dictionary<string, string>();
+
+                            indexMapping[index.Name].Add(tableColumn.Name, tableColumn.Name);
+                        }
+                        
+                    }
                 }
                 else
                 {
                     property.Name = propertyConfig.KeepNameAsIs ? tableColumn.Name : propertyConfig.AppacitivePropertyName;
                     property.Description = propertyConfig.Description ?? string.Empty;
+
+                    //  Compute index mappings
+                    foreach (var index in tableColumn.Indexes)
+                    {
+                        if (index.Type.Equals("unique") || index.Type.Equals("primary"))
+                        {
+                            if (indexMapping.ContainsKey(index.Name) == false)
+                                indexMapping[index.Name] = new Dictionary<string, string>();
+
+                            indexMapping[index.Name].Add(tableColumn.Name, property.Name);
+                        }
+                    }
                 }
 
                 //  Validate property name.
-                if (StringValidationHelper.IsAlphanumeric(property.Name) == false)
-                    throw new Exception(string.Format("Incorrect name for property '{0}' in schema '{1}'. It should be alphanumeric starting with alphabet.", property.Name, schema.Name));
+                if (property.Name.IsValidName() == false)
+                    throw new Exception(string.Format("Incorrect name for property '{0}' in schema '{1}'. It should be alphanumeric, starting with alphabet.", property.Name, schema.Name));
 
                 //  Add Appacitive business validations according to constraints on columns.
                 foreach (var constraint in tableColumn.Constraints)
@@ -76,6 +103,37 @@ namespace Appacitive.Tools.DBImport
 
                 schema.Properties.Add(property);
             }
+
+            //  Process unique and primary indexes
+            foreach (var indexMap in indexMapping)
+            {
+                if (indexMap.Value.Count == 1)
+                {
+                    foreach (var col in currentTable.Columns)
+                    {
+                        if (col.Indexes.Any(ind => ind.Name.Equals(indexMap.Key)))
+                        {
+                            schema.Properties.First(prop => prop.Name.Equals(indexMap.Value.First().Value)).IsUnique = true;
+                        }
+                    }
+                }
+                else
+                {
+                    var uniqueCompositeProperty = new Property();
+                    var propertyNameBuilder = new StringBuilder();
+                    propertyNameBuilder.Append(indexMap.Value.First().Value);
+                    foreach (var propName in indexMap.Value.Keys)
+                    {
+                        if (propName.Equals(indexMap.Value.First().Value))
+                            continue;
+                        propertyNameBuilder.Append("__");
+                        propertyNameBuilder.Append(propName);
+                    }
+                    uniqueCompositeProperty.IsUnique = true;
+                    schema.Properties.Add(uniqueCompositeProperty);
+                }
+            }
+
             input.Schemata.Add(schema);
         }
     }

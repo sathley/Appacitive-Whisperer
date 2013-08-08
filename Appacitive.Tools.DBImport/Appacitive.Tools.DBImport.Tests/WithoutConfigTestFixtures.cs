@@ -15,7 +15,7 @@ namespace Appacitive.Tools.DBImport.Tests
             var connectionString = "Server=localhost;Database=dgossamercore;Uid=root;Pwd=test123!@#;";
 
             //var database = ConfigurationManager.AppSettings["mysql-database"];
-            var database = "whisperer";
+            var database = "dgossamercore";
             var dbImport = new DBImport();
             dbImport.Import(new InputConfigurationWithDatabaseDetails()
                                 {

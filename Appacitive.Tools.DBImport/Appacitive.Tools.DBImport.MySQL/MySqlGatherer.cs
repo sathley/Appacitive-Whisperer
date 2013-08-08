@@ -112,7 +112,6 @@ namespace Appacitive.Tools.DBImport.MySQL
                                                    });
                     }
                     newTable.Columns.Add(column);
-
                 }
                 result.Tables.Add(newTable);
             }
