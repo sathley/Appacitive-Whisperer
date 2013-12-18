@@ -8,3 +8,7 @@ Create Appacitive model from your existing relational database schema.
 
 This tool helps you to migrate your existing relational database definition onto Appacitive.
 
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/sathley/appacitive-whisperer/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
